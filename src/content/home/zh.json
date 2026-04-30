@@ -1,0 +1,153 @@
+{
+  "hero": {
+    "titleLine1": "挑战地心深度",
+    "titleLine2": "刷新亚洲纪录",
+    "subtitle": "掌握12000米超深井钻采技术，创下9396米亚洲最深水平井纪录。\nLasting Qual —— 您最值得信赖的能源合作伙伴",
+    "buttonPrimaryText": "查看业务领域",
+    "buttonPrimaryHref": "/zh/products",
+    "buttonSecondaryText": "联系我们",
+    "buttonSecondaryHref": "/zh/contact",
+    "bgImage": "/uploads/home/zh/hero/bgImage.jpg",
+    "bgImageFocus": "center center"
+  },
+  "metrics": [
+    {
+      "value": "2002",
+      "unit": "年",
+      "desc": "行业积淀始于"
+    },
+    {
+      "value": "9396",
+      "unit": "米",
+      "desc": "亚洲钻探深度纪录"
+    },
+    {
+      "value": "CNPC",
+      "desc": "中石油一级供应商"
+    },
+    {
+      "value": "ISO",
+      "desc": "全体系质量认证"
+    }
+  ],
+  "businessSection": {
+    "show": true,
+    "title": "核心业务领域",
+    "desc": "集钻采装备研发、制造、租赁、贸易及服务于一体的综合性跨国企业。"
+  },
+  "cardsSection": {
+    "show": true,
+    "cards": [
+      {
+        "title": "高端钻机租赁 (ZJ90DB)",
+        "summary": "提供高端钻机租赁，适配超深井作业场景。",
+        "imageFocus": "center center",
+        "ctaText": "了解更多",
+        "ctaHref": "/zh/products",
+        "order": 1,
+        "published": true
+      },
+      {
+        "title": "油田特种底盘 (中国重汽联研)",
+        "summary": "与中国重汽联合研发，提供 8x6 压裂车底盘、混砂车底盘及 58吨 连续油管车底盘。全面替代进口 MAN 及奔驰底盘，降低综合成本。",
+        "image": "/uploads/home/zh/cards/cardsSection/cards/1/image.jpg",
+        "imageFocus": "center center",
+        "ctaText": "了解更多",
+        "ctaHref": "/zh/products",
+        "order": 2,
+        "published": true
+      },
+      {
+        "title": "动力总包服务",
+        "summary": "为钻机提供一站式动力系统解决方案。",
+        "image": "/uploads/home/zh/cards/cardsSection/cards/2/image.jpg",
+        "imageFocus": "center center",
+        "ctaText": "了解更多",
+        "ctaHref": "/zh/products",
+        "order": 3,
+        "published": true
+      }
+    ]
+  },
+  "bottomSection": {
+    "show": true,
+    "bottomTitle": "战略合作伙伴",
+    "bottomSubtitle": "国内国际石油公司、国内国际油服公司"
+  },
+  "bottomListSection": {
+    "show": true,
+    "bottomList": [
+      {
+        "title": "中国石油",
+        "order": 1
+      },
+      {
+        "title": "中国海油",
+        "order": 2
+      },
+      {
+        "title": "中国石化",
+        "order": 3
+      },
+      {
+        "title": "中石油油服",
+        "order": 4
+      },
+      {
+        "title": "中海油服",
+        "order": 5
+      },
+      {
+        "title": "中石化油服",
+        "order": 6
+      },
+      {
+        "title": "中曼石油",
+        "order": 8
+      },
+      {
+        "title": "杰瑞",
+        "order": 7
+      },
+      {
+        "title": "中曼石油",
+        "order": 1
+      },
+      {
+        "title": "沙特阿美",
+        "order": 1
+      },
+      {
+        "title": "墨石油",
+        "order": 1
+      },
+      {
+        "title": "卡塔尔能源",
+        "order": 1
+      },
+      {
+        "title": "俄油",
+        "order": 1
+      },
+      {
+        "title": "科威特石油",
+        "order": 1
+      },
+      {
+        "title": "巴油",
+        "order": 1
+      },
+      {
+        "title": "阿油",
+        "order": 1
+      }
+    ]
+  },
+  "cta": {
+    "show": false,
+    "title": "联系我们",
+    "desc": "石油装备供应链解决方案专家\n中国石油 (CNPC / PetroChina) - 中国石油天然气集团\n中国海油 (CNOOC) - 中国海洋石油集团\n中国石化 (Sinopec) - 中国石油化工集团\n中石油油服 (CPTSC) - 中国石油集团油田技术服务有限公司\n中石化油服 (SSC) - 中石化石油工程技术服务股份有限公司\n中海油服 (COSL) - 中海油田服务股份有限公司\n杰瑞 (Jereh) - 杰瑞石油服务集团\n中曼石油 (ZPEC) - 中曼石油天然气集团\n沙特阿美 (Saudi Aramco) - 沙特阿拉伯国家石油公司\n墨石油 (Pemex) - 墨西哥石油公司\n卡塔尔能源 (QatarEnergy)\n俄油 (Rosneft) - 俄罗斯石油公司\n科威特石油 (KOC) - 科威特石油公司\n巴油 (Petrobras) - 巴西石油公司\n阿塞拜疆石油 (SOCAR) - 阿塞拜疆共和国国家石油公司",
+    "buttonText": "索取解决方案",
+    "buttonHref": "/zh/contact"
+  }
+}

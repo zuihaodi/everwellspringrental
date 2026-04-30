@@ -1,0 +1,71 @@
+---
+import { getLanguagePolicy, getSiteSettings } from "../lib/site-settings";
+
+interface Props {
+	title: string;
+	lang?: string;
+}
+
+const { title, lang = "zh-CN" } = Astro.props;
+const site = getSiteSettings();
+const languagePolicy = getLanguagePolicy(site);
+const pageLang = lang.toLowerCase().startsWith("en") ? "en" : "zh";
+const languageAllowed =
+	pageLang === "en" ? languagePolicy.hasEn : languagePolicy.hasZh;
+---
+
+<!doctype html>
+<html lang={lang}>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={site.defaultDescription} />
+		{!languageAllowed && <meta http-equiv="refresh" content={`0;url=${languagePolicy.rootHref}`} />}
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body class="font-sans text-slate-800 bg-white">
+		<slot />
+		<dialog id="global-image-lightbox" class="p-0 border-0 bg-transparent max-w-[92vw] max-h-[92vh] w-auto">
+			<form method="dialog" class="fixed inset-0 bg-black/75 backdrop-blur-[1px]"></form>
+			<div class="fixed inset-0 z-10 flex items-center justify-center p-4">
+				<button type="button" id="global-image-lightbox-close" class="absolute top-4 right-4 text-white text-3xl leading-none bg-black/50 rounded px-3 py-1 border border-white/30">&times;</button>
+				<img id="global-image-lightbox-img" src="" alt="" class="max-w-full max-h-full object-contain rounded shadow-2xl" loading="lazy" />
+			</div>
+		</dialog>
+		<script is:inline>
+			(() => {
+				const dlg = document.getElementById("global-image-lightbox");
+				const img = document.getElementById("global-image-lightbox-img");
+				const closeBtn = document.getElementById("global-image-lightbox-close");
+				if (!(dlg instanceof HTMLDialogElement) || !(img instanceof HTMLImageElement)) return;
+
+				document.addEventListener("click", (event) => {
+					const target = event.target;
+					if (!(target instanceof Element)) return;
+					const trigger = target.closest("[data-lightbox-src]");
+					if (!trigger) return;
+					event.preventDefault();
+					const src = trigger.getAttribute("data-lightbox-src");
+					if (!src) return;
+					img.src = src;
+					img.alt = trigger.getAttribute("data-lightbox-alt") || "";
+					if (!dlg.open) dlg.showModal();
+				});
+
+				const close = () => {
+					if (dlg.open) dlg.close();
+					img.src = "";
+				};
+				closeBtn?.addEventListener("click", close);
+				dlg.addEventListener("click", (event) => {
+					if (event.target === dlg) close();
+				});
+				dlg.addEventListener("close", () => {
+					img.src = "";
+				});
+			})();
+		</script>
+	</body>
+</html>

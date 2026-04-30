@@ -1,0 +1,10 @@
+{
+  "pageKey": "contact",
+  "title": "业务咨询",
+  "summary": "面向产品、技术和融资的一对一咨询服务。",
+  "image": "/uploads/cards/zh/contact-01-sales/image.jpg",
+  "ctaText": "立即联系",
+  "ctaHref": "/zh/contact",
+  "order": 1,
+  "published": true
+}

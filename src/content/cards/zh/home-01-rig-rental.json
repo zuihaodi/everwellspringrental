@@ -1,0 +1,11 @@
+{
+  "pageKey": "home",
+  "key": "home-rig-rental",
+  "title": "高端钻机租赁 (ZJ90DB)",
+  "summary": "提供高端钻机租赁，适配超深井作业场景。",
+  "image": "/images/card1.jpg",
+  "ctaText": "了解更多",
+  "ctaHref": "/zh/products",
+  "order": 1,
+  "published": true
+}

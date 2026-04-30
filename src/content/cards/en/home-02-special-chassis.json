@@ -1,0 +1,11 @@
+{
+  "pageKey": "home",
+  "key": "home-special-chassis",
+  "title": "Oilfield Special Chassis",
+  "summary": "8x6 fracturing and mission-specific chassis platforms.",
+  "image": "/images/card2.jpg",
+  "ctaText": "Read More",
+  "ctaHref": "/en/products",
+  "order": 2,
+  "published": true
+}

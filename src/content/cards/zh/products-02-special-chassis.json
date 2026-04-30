@@ -1,0 +1,11 @@
+{
+  "pageKey": "products",
+  "key": "products-special-chassis",
+  "title": "油田特种底盘",
+  "summary": "提供压裂车底盘、混砂车底盘等定制化底盘产品。",
+  "image": "/images/card2.jpg",
+  "ctaText": "了解更多",
+  "ctaHref": "/zh/products",
+  "order": 2,
+  "published": true
+}

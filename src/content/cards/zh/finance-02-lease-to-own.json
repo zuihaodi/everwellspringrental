@@ -1,0 +1,11 @@
+{
+  "pageKey": "finance",
+  "key": "finance-lease-to-own",
+  "title": "Lease to Own",
+  "summary": "Stage payment model from usage to ownership.",
+  "image": "/images/card2.jpg",
+  "ctaText": "View Details",
+  "ctaHref": "/zh/finance",
+  "order": 2,
+  "published": true
+}

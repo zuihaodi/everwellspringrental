@@ -1,0 +1,11 @@
+{
+  "pageKey": "finance",
+  "key": "finance-consortium",
+  "title": "Consortium Delivery",
+  "summary": "Consortium mode for large projects and financing synergy.",
+  "image": "/images/card3.jpg",
+  "ctaText": "View Details",
+  "ctaHref": "/zh/finance",
+  "order": 3,
+  "published": true
+}

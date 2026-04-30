@@ -1,0 +1,117 @@
+﻿---
+import { getNavEn } from "../i18n/nav";
+import { getLanguagePolicy, getSiteSettings } from "../lib/site-settings";
+const navEn = getNavEn();
+const site = getSiteSettings();
+const languagePolicy = getLanguagePolicy(site);
+const zhPagePaths = new Set([
+  "/zh",
+  "/zh/about",
+  "/zh/products",
+  "/zh/solutions",
+  "/zh/finance",
+  "/zh/contact",
+  "/zh/finance-solutions",
+]);
+
+const normalizePath = (path: string) => {
+  if (!path) return "/en";
+  return path.length > 1 && path.endsWith("/") ? path.slice(0, -1) : path;
+};
+
+const currentPath = normalizePath(Astro.url.pathname);
+const mappedZhPath =
+  currentPath === "/en" ? "/zh" : currentPath.startsWith("/en/") ? `/zh${currentPath.slice(3)}` : "/zh";
+const switchHref = zhPagePaths.has(mappedZhPath) ? mappedZhPath : "/zh/";
+const brandHref = languagePolicy.hasEn ? "/en/" : languagePolicy.rootHref;
+---
+<header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-20">
+      <div class="flex-shrink-0 flex items-center cursor-pointer">
+        <a href={brandHref} class="flex items-center gap-3 text-3xl font-extrabold text-[#003865] tracking-tighter no-underline">
+          {site.logo ? (
+            <img src={site.logo} alt={site.shortBrand} class="h-12 w-auto max-w-[220px] object-contain" loading="eager" />
+          ) : (
+            <span>{site.shortBrand}<span class="text-[#E63E00]">.</span></span>
+          )}
+        </a>
+      </div>
+
+      <div class="hidden md:flex items-center space-x-8">
+        <nav id="main-nav-en" class="flex space-x-8">
+          {navEn.map((item) => (
+            <a href={item.href} class="text-gray-700 hover:text-[#003865] font-bold text-sm uppercase tracking-wide no-underline">{item.label}</a>
+          ))}
+        </nav>
+
+        {languagePolicy.canSwitch && languagePolicy.hasZh && (
+          <a href={switchHref} class="border border-[#003865] text-[#003865] px-3 py-1 rounded text-xs font-bold hover:bg-[#003865] hover:text-white transition no-underline">
+            中文
+          </a>
+        )}
+      </div>
+
+      <div class="md:hidden flex items-center">
+        <button
+          type="button"
+          class="text-gray-500 hover:text-gray-900 focus:outline-none"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="mobile-nav-en"
+          data-mobile-menu-toggle
+        >
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-nav-en" class="md:hidden hidden pb-4" data-mobile-menu>
+      <nav class="flex flex-col space-y-3">
+        {navEn.map((item) => (
+          <a href={item.href} class="text-gray-700 hover:text-[#003865] font-bold text-sm no-underline" data-mobile-menu-link>{item.label}</a>
+        ))}
+        {languagePolicy.canSwitch && languagePolicy.hasZh && (
+          <a href={switchHref} class="inline-flex w-fit border border-[#003865] text-[#003865] px-3 py-1 rounded text-xs font-bold hover:bg-[#003865] hover:text-white transition no-underline" data-mobile-menu-link>
+            中文
+          </a>
+        )}
+      </nav>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggles = document.querySelectorAll("[data-mobile-menu-toggle]");
+  toggles.forEach((toggle) => {
+    if (!(toggle instanceof HTMLButtonElement)) return;
+    if (toggle.dataset.mobileMenuBound === "true") return;
+
+    const menuId = toggle.getAttribute("aria-controls");
+    if (!menuId) return;
+
+    const menu = document.getElementById(menuId);
+    if (!(menu instanceof HTMLElement)) return;
+
+    toggle.dataset.mobileMenuBound = "true";
+    const links = menu.querySelectorAll("[data-mobile-menu-link]");
+    const closeMenu = () => {
+      menu.classList.add("hidden");
+      toggle.setAttribute("aria-expanded", "false");
+    };
+
+    toggle.addEventListener("click", () => {
+      const willOpen = menu.classList.contains("hidden");
+      menu.classList.toggle("hidden", !willOpen);
+      toggle.setAttribute("aria-expanded", willOpen ? "true" : "false");
+    });
+
+    links.forEach((link) => link.addEventListener("click", closeMenu));
+    window.addEventListener("resize", () => {
+      if (window.innerWidth >= 768) closeMenu();
+    });
+  });
+</script>
+

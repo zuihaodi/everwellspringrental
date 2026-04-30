@@ -1,0 +1,11 @@
+{
+  "pageKey": "contact",
+  "key": "contact-support",
+  "title": "技术支持",
+  "summary": "提供运维答疑与远程协助，提高现场处置效率。",
+  "image": "/images/card2.jpg",
+  "ctaText": "提交需求",
+  "ctaHref": "/zh/contact",
+  "order": 2,
+  "published": true
+}

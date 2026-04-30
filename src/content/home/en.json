@@ -1,0 +1,81 @@
+{
+  "hero": {
+    "titleLine1": "Challenge Deep Earth",
+    "titleLine2": "Set a New Asia Record",
+    "subtitle": "Mastering 12,000m ultra-deep drilling technology and setting the 9,396m Asia record for deepest horizontal well.\nLasting Qual — Your most trusted energy partner.",
+    "buttonPrimaryText": "View Business Areas",
+    "buttonPrimaryHref": "/en/products",
+    "buttonSecondaryText": "Contact Us",
+    "buttonSecondaryHref": "/en/contact"
+  },
+  "metrics": [
+    {
+      "value": "2002",
+      "unit": "Year",
+      "desc": "Industry foundation since"
+    },
+    {
+      "value": "9396",
+      "unit": "M",
+      "desc": "Asia drilling depth record"
+    },
+    {
+      "value": "CNPC",
+      "desc": "CNPC tier-1 supplier"
+    },
+    {
+      "value": "ISO",
+      "desc": "Full-system quality certification"
+    }
+  ],
+  "businessSection": {
+    "show": true,
+    "title": "Core Business Areas",
+    "desc": "A comprehensive multinational corporation that integrates the research and development, manufacturing, leasing, trading, and servicing of drilling and production equipment."
+  },
+  "cardsSection": {
+    "show": true,
+    "cards": [
+      {
+        "title": "High-End Drilling Rig Rental (ZJ90DB)",
+        "summary": "We offer high-end drilling rig rentals suitable for ultra-deep well operations.",
+        "ctaText": "Learn More",
+        "ctaHref": "/en/products",
+        "order": 1,
+        "published": true
+      },
+      {
+        "title": "Specialized Chassis for Oil Fields (China National Heavy Duty Truck Group Joint Research)",
+        "summary": "r 8x6 fracturing truck chassis, sand-mixing truck chassis, and 58-ton coiled tubing truck chassis. These products fully replace imported MAN and Mercedes-Benz chassis, thereby reducing overall costs.",
+        "ctaText": "Learn More",
+        "ctaHref": "/en/products",
+        "order": 3,
+        "published": true
+      },
+      {
+        "title": "Power System Turnkey Services",
+        "summary": "Providing one-stop power system solutions for drilling rigs.",
+        "ctaText": "Learn More",
+        "ctaHref": "/en/products",
+        "order": 3,
+        "published": true
+      }
+    ]
+  },
+  "bottomListSection": {
+    "show": true,
+    "bottomList": []
+  },
+  "cta": {
+    "title": "Contact Us",
+    "desc": "Oil equipment supply chain solution experts",
+    "buttonText": "Get Solution",
+    "buttonHref": "/en/contact"
+  },
+  "translation": {
+    "mode": "auto",
+    "status": "synced",
+    "sourceHash": "8ceb73c96d09be0f",
+    "lastTranslatedAt": "2026-04-13T15:41:31.381Z"
+  }
+}

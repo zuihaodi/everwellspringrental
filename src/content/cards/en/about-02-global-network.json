@@ -1,0 +1,11 @@
+{
+  "pageKey": "about",
+  "key": "about-global-network",
+  "title": "Global Service Network",
+  "summary": "Operations centered in Singapore with resources across Asia, Middle East and the Americas.",
+  "image": "/images/card2.jpg",
+  "ctaText": "Read More",
+  "ctaHref": "/en/about",
+  "order": 2,
+  "published": true
+}

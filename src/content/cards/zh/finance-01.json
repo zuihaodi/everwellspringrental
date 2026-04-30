@@ -1,0 +1,10 @@
+{
+  "pageKey": "finance",
+  "title": "Finance Lease",
+  "summary": "Operating lease plan for equipment.",
+  "image": "/uploads/cards/zh/finance-01/image.png",
+  "ctaText": "View Details",
+  "ctaHref": "/zh/finance",
+  "order": 1,
+  "published": true
+}

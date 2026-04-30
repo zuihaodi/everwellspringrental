@@ -1,0 +1,11 @@
+{
+  "pageKey": "contact",
+  "key": "contact-partnership",
+  "title": "合作对接",
+  "summary": "针对跨区域合作、联合投标和供应链对接提供支持。",
+  "image": "/images/card3.jpg",
+  "ctaText": "开始洽谈",
+  "ctaHref": "/zh/contact",
+  "order": 3,
+  "published": true
+}

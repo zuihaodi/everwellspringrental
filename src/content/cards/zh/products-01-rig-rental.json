@@ -1,0 +1,11 @@
+{
+  "pageKey": "products",
+  "key": "products-rig-rental",
+  "title": "高端钻机租赁",
+  "summary": "面向极端工况的钻机租赁服务，快速匹配项目进度。",
+  "image": "/images/card1.jpg",
+  "ctaText": "了解更多",
+  "ctaHref": "/zh/products",
+  "order": 1,
+  "published": true
+}

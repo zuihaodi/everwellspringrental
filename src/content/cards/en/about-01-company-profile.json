@@ -1,0 +1,11 @@
+{
+  "pageKey": "about",
+  "key": "about-company-profile",
+  "title": "Company Profile",
+  "summary": "Since 2002, we have built long-term capabilities in energy equipment and project delivery.",
+  "image": "/images/card1.jpg",
+  "ctaText": "Read More",
+  "ctaHref": "/en/about",
+  "order": 1,
+  "published": true
+}

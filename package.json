@@ -1,0 +1,31 @@
+{
+  "name": "lastingqual",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "npm run check:utf8 && npm run content:prepare && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "images:process": "node scripts/process-images.mjs",
+    "content:prepare": "npm run images:process",
+    "check:encoding": "node scripts/check-utf8.mjs",
+    "check:utf8": "node scripts/check-utf8.mjs",
+    "content:translate": "node scripts/sync-zh-to-en.mjs",
+    "content:translate:check": "node scripts/check-openai.mjs"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^12.6.13",
+    "@astrojs/react": "^5.0.3",
+    "@astrojs/tailwind": "^6.0.2",
+    "@keystatic/astro": "^5.0.6",
+    "@keystatic/core": "^0.5.50",
+    "astro": "^5.16.9",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "tailwindcss": "^3.4.19"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.5"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "pageKey": "about",
+  "key": "about-partner-ecosystem",
+  "title": "Partner Ecosystem",
+  "summary": "Long-term collaboration with leading partners in manufacturing, logistics and execution.",
+  "image": "/images/card3.jpg",
+  "ctaText": "Read More",
+  "ctaHref": "/en/about",
+  "order": 3,
+  "published": true
+}

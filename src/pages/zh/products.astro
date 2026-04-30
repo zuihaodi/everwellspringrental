@@ -1,0 +1,24 @@
+﻿---
+import Layout from "../../app/layouts/Layout.astro";
+import Header from "../../app/components/Header.astro";
+import UnifiedSimplePage from "../../app/components/UnifiedSimplePage.astro";
+import { siteConfig } from "../../app/config/site";
+import { loadCardsByLangPage, loadProductsByLang, loadSimplePageByLang } from "../../app/lib/content-loader";
+
+const cfg = loadSimplePageByLang("products", "zh");
+const cards = loadCardsByLangPage("zh", "products").filter((c) => c.title && c.summary);
+const legacyCards = loadProductsByLang("zh")
+  .filter((p) => p.title && p.summary)
+  .map((p) => ({ title: p.title, summary: p.summary, image: p.cover, ctaText: "了解更多", ctaHref: p.ctaHref || "/zh/contact", order: p.order, published: p.published }));
+const mergedCards = cards.length > 0 ? cards : legacyCards;
+---
+
+<Layout title={`${cfg?.heroTitle || "Products & Services"} | ${siteConfig.shortBrand}`} lang="zh-CN">
+  <Header />
+  <UnifiedSimplePage cfg={cfg} cards={mergedCards} lang="zh" />
+  <footer class="bg-[#002845] text-white py-8">
+    <div class="max-w-7xl mx-auto px-4 text-center text-sm">
+      <p>&copy; {siteConfig.copyrightYear} {siteConfig.companyName} All rights reserved.</p>
+    </div>
+  </footer>
+</Layout>

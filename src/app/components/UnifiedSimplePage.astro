@@ -1,0 +1,172 @@
+---
+import { renderRichText } from "../lib/rich-text";
+import type { CmsCardItem, CmsSimplePageConfig } from "../types/content";
+
+interface Props {
+  cfg: CmsSimplePageConfig;
+  cards: CmsCardItem[];
+  lang: "zh" | "en";
+}
+
+const { cfg, cards, lang } = Astro.props as Props;
+const isZh = lang === "zh";
+const toMainImage = (src?: string) => (src ? src.replace(/\.sm\.webp$/i, ".webp") : "");
+const focusPos = (value?: string) => value || "center center";
+---
+
+<main>
+  {cfg.heroShow !== false && (
+    <div class="py-16 relative" class:list={{ "bg-[#003865]": !cfg.heroBgImage }}>
+      {cfg.heroBgImage && (
+        <div class="absolute inset-0 overflow-hidden bg-slate-900">
+          <img src={cfg.heroBgImage} alt={cfg.heroTitle || ""} class="w-full h-full object-cover opacity-40" style={{ objectPosition: focusPos(cfg.heroBgFocus) }} />
+        </div>
+      )}
+      <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
+        <h1 class="text-4xl font-extrabold text-white">{cfg.heroTitle}</h1>
+        {cfg.heroSubtitle && <p class="mt-4 text-xl text-gray-200 whitespace-pre-line">{cfg.heroSubtitle}</p>}
+      </div>
+    </div>
+  )}
+
+  {cfg.mainShow !== false && (
+    <section class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div>
+          {cfg.sectionTitle && <h2 class="text-3xl font-bold text-[#003865] mb-6">{cfg.sectionTitle}</h2>}
+          {cfg.sectionBody && <p class="text-gray-600 leading-relaxed" set:html={renderRichText(cfg.sectionBody)}></p>}
+
+          {(cfg.sectionPrimaryButtonText || cfg.sectionSecondaryButtonText) && (
+            <div class="mt-8 flex flex-col sm:flex-row gap-4">
+              {cfg.sectionPrimaryButtonText && cfg.sectionPrimaryButtonHref && (
+                <a href={cfg.sectionPrimaryButtonHref} class="bg-[#E63E00] text-white px-6 py-3 rounded font-bold text-center no-underline hover:bg-orange-700 transition">
+                  {cfg.sectionPrimaryButtonText}
+                </a>
+              )}
+              {cfg.sectionSecondaryButtonText && cfg.sectionSecondaryButtonHref && (
+                <a href={cfg.sectionSecondaryButtonHref} class="bg-transparent border border-[#003865] text-[#003865] px-6 py-3 rounded font-bold text-center no-underline hover:bg-[#003865] hover:text-white transition">
+                  {cfg.sectionSecondaryButtonText}
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+
+        {cfg.image && (
+          <div class="rounded-lg overflow-hidden shadow-2xl aspect-[12/7]">
+            <img src={cfg.image} alt={cfg.sectionTitle || ""} width="1200" height="700" class="w-full h-full object-cover" style={{ objectPosition: focusPos(cfg.imageFocus) }} />
+          </div>
+        )}
+      </div>
+    </section>
+  )}
+
+  {cfg.metricsShow === true && cfg.metrics && cfg.metrics.length > 0 && (
+    <section class="bg-[#003865] py-10 border-b-4 border-[#E63E00]">
+      <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
+        {cfg.metrics.map((metric) => (
+          <div>
+            <div class="text-4xl font-bold mb-1">
+              {metric.value}
+              {metric.unit && <span class="text-xl font-normal">{metric.unit}</span>}
+            </div>
+            <div class="text-gray-300 text-sm">{metric.desc}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {cfg.middleShow !== false && (cfg.middleTitle || cfg.middleSubtitle) && (
+    <section class="py-12 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        {cfg.middleTitle && <h2 class="text-3xl font-bold text-[#003865]">{cfg.middleTitle}</h2>}
+        {cfg.middleSubtitle && <p class="mt-4 text-gray-600">{cfg.middleSubtitle}</p>}
+      </div>
+    </section>
+  )}
+
+  {cfg.cardsShow !== false && cards.length > 0 && (
+    <section class="py-12 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {cards.map((item) => (
+          <article class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+            {item.image && (
+              <div class="h-44 mb-4 overflow-hidden rounded">
+                <button
+                  type="button"
+                  class="w-full h-full block cursor-zoom-in"
+                  data-lightbox-src={toMainImage(item.image)}
+                  data-lightbox-alt={item.title || ""}
+                  aria-label={isZh ? "查看大图" : "View large image"}
+                >
+                  <img src={item.image} alt={item.title} class="w-full h-full object-cover" style={{ objectPosition: focusPos(item.imageFocus) }} loading="lazy" />
+                </button>
+              </div>
+            )}
+            <h3 class="text-xl font-bold text-[#003865] mb-2">{item.title}</h3>
+            <p class="text-gray-600 text-sm mb-4" set:html={renderRichText(item.summary || "")}></p>
+            {item.ctaText && item.ctaHref && (
+              <a href={item.ctaHref} class="text-[#E63E00] font-semibold text-sm hover:underline no-underline">
+                {item.ctaText} &rarr;
+              </a>
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {cfg.bottomShow !== false && (cfg.bottomTitle || cfg.bottomSubtitle) && (
+    <section class="py-12 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        {cfg.bottomTitle && <h2 class="text-3xl font-bold text-[#003865]">{cfg.bottomTitle}</h2>}
+        {cfg.bottomSubtitle && <p class="mt-4 text-gray-600">{cfg.bottomSubtitle}</p>}
+      </div>
+    </section>
+  )}
+
+  {cfg.bottomListShow !== false && cfg.bottomList && cfg.bottomList.length > 0 && (
+    <section class="py-8 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {cfg.bottomList.map((item) => (
+          <article class="bg-white border border-gray-200 rounded-lg p-6 text-center">
+            <h3 class="text-2xl font-bold text-[#003865] mb-2">{item.title}</h3>
+            <p class="text-gray-600">{item.summary}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {cfg.contactInfo?.show === true && (
+    <section class="py-12 bg-white">
+      <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-2xl font-bold text-[#003865] mb-6">{cfg.contactInfo.title || (isZh ? "联系信息" : "Contact Info")}</h2>
+        <div class="space-y-4 text-gray-700">
+          {cfg.contactInfo.addressLine1 && (
+            <p>
+              <strong class="text-gray-900">{isZh ? "地址：" : "Address: "}</strong>
+              {cfg.contactInfo.addressLine1}
+              {cfg.contactInfo.addressLine2 ? <><br />{cfg.contactInfo.addressLine2}</> : null}
+            </p>
+          )}
+          {cfg.contactInfo.email && (
+            <p>
+              <strong class="text-gray-900">{isZh ? "邮箱：" : "Email: "}</strong>
+              <a href={`mailto:${cfg.contactInfo.email}`} class="text-[#E63E00] hover:underline">
+                {cfg.contactInfo.email}
+              </a>
+            </p>
+          )}
+          {cfg.contactInfo.phone && (
+            <p>
+              <strong class="text-gray-900">{isZh ? "电话：" : "Phone: "}</strong>
+              {cfg.contactInfo.phone}
+            </p>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+</main>

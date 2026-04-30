@@ -1,0 +1,11 @@
+{
+  "pageKey": "solutions",
+  "key": "solutions-training",
+  "title": "定制化技术培训",
+  "summary": "围绕设备运维与安全流程开展分层培训，强化一线能力。",
+  "image": "/images/card3.jpg",
+  "ctaText": "查看详情",
+  "ctaHref": "/zh/contact",
+  "order": 3,
+  "published": true
+}

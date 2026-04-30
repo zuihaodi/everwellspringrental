@@ -1,0 +1,12 @@
+{
+  "pageKey": "finance",
+  "key": "finance-equipment-lease",
+  "title": "Equipment Leasing",
+  "summary": "Operating lease structures to reduce upfront project cash pressure.",
+  "image": "/images/card1.jpg",
+  "ctaText": "Details",
+  "ctaHref": "/en/finance",
+  "order": 1,
+  "published": true
+}
+

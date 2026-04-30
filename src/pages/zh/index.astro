@@ -1,0 +1,209 @@
+﻿---
+import Layout from "../../app/layouts/Layout.astro";
+import Header from "../../app/components/Header.astro";
+import { siteConfig } from "../../app/config/site";
+import { loadCardsByLangPage, loadHomeByLang, loadProductsByLang } from "../../app/lib/content-loader";
+import type { CmsCardItem, CmsHomeConfig, CmsProductItem } from "../../app/types/content";
+
+const fallbackHome: CmsHomeConfig = {
+  hero: {
+    titleLine1: "Challenge Deep Earth",
+    titleLine2: "Set New Records",
+    subtitle:
+      "Mastering ultra-deep drilling technology and delivering reliable energy solutions.",
+    buttonPrimaryText: "View Services",
+    buttonPrimaryHref: "/zh/products",
+    buttonSecondaryText: "Contact Us",
+    buttonSecondaryHref: "/zh/contact",
+    bgImage: "/images/hero-bg.jpg",
+  },
+  metrics: [
+    { value: "2002", unit: "Y", desc: "Established Since" },
+    { value: "9396", unit: "m", desc: "Depth Record" },
+    { value: "CNPC", unit: "", desc: "Tier-1 Supplier" },
+    { value: "ISO", unit: "", desc: "Certified Quality" },
+  ],
+  businessSection: {
+    show: true,
+    title: "Core Business",
+    desc: "Integrated capabilities in R&D, manufacturing, leasing and service.",
+  },
+  cta: {
+    title: "Reliable Supply Network",
+    desc: "Customized support for complex energy projects.",
+    buttonText: "Get Proposal",
+    buttonHref: "/zh/contact",
+  },
+};
+
+const homeConfig = loadHomeByLang("zh") || fallbackHome;
+const metrics = homeConfig.metrics?.length ? homeConfig.metrics : fallbackHome.metrics;
+
+const productFallback: CmsProductItem[] = [
+  {
+    category: "Rental",
+    title: "High-end Rig Rental (ZJ90DB)",
+    summary: "High-end rig leasing for deep drilling scenarios.",
+    cover: "/images/card1.jpg",
+    ctaHref: "/zh/contact",
+    order: 1,
+    published: true,
+  },
+  {
+    category: "Sales",
+    title: "Oilfield Special Chassis",
+    summary: "8x6 fracturing and mixed-operation chassis solutions.",
+    cover: "/images/card2.jpg",
+    ctaHref: "/zh/contact",
+    order: 2,
+    published: true,
+  },
+  {
+    category: "Service",
+    title: "Power Packaging Service",
+    summary: "One-stop power package solutions for drilling operations.",
+    cover: "/images/card3.jpg",
+    ctaHref: "/zh/contact",
+    order: 3,
+    published: true,
+  },
+];
+
+const cmsProducts = loadProductsByLang("zh").filter((p) => p.title && p.summary && p.cover);
+const cardsEnabled = homeConfig.cardsSection?.show !== false;
+const cards = cardsEnabled ? loadCardsByLangPage("zh", "home").filter((c) => c.title && c.summary) : [];
+const bottomListEnabled = homeConfig.bottomListSection?.show !== false;
+const bottomList = homeConfig.bottomListSection?.bottomList || homeConfig.bottomList || [];
+const bottomTitle = homeConfig.bottomSection?.bottomTitle || homeConfig.bottomTitle || "底部列表区域";
+const bottomSubtitle = homeConfig.bottomSection?.bottomSubtitle || homeConfig.bottomSubtitle || "";
+const bottomCols = Math.min(8, Math.max(bottomList.length, 1));
+const toMainImage = (src?: string) => (src ? src.replace(/\.sm\.webp$/i, ".webp") : "");
+const focusPos = (value?: string) => value || "center center";
+const topProducts = (
+  cards.length
+    ? cards.map((c: CmsCardItem) => ({
+        title: c.title || "",
+        summary: c.summary || "",
+        cover: c.image || "/images/card1.jpg",
+        fullCover: toMainImage(c.image) || c.image || "/images/card1.jpg",
+        coverFocus: c.imageFocus || "center center",
+        ctaText: c.ctaText || "了解更多",
+        ctaHref: c.ctaHref || "/zh/contact",
+      }))
+    : cmsProducts.length
+      ? cmsProducts.map((p) => ({
+          ...p,
+          fullCover: toMainImage(p.cover) || p.cover || "/images/card1.jpg",
+          coverFocus: p.coverFocus || "center center",
+          ctaText: "了解更多",
+        }))
+      : productFallback.map((p) => ({ ...p, fullCover: p.cover, coverFocus: "center center" }))
+);
+---
+
+<Layout title={`${siteConfig.shortBrand} - Energy Equipment Service`} lang="zh-CN">
+  <Header />
+
+  <main>
+    <section class="relative h-[700px] flex items-center bg-slate-900">
+      <div class="absolute inset-0 overflow-hidden">
+        <img src={homeConfig.hero.bgImage} alt="Drilling Site" class="w-full h-full object-cover opacity-50" style={{ objectPosition: focusPos(homeConfig.hero.bgImageFocus) }} />
+      </div>
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white mt-10">
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
+          {homeConfig.hero.titleLine1}<br />
+          <span class="text-[#E63E00]">{homeConfig.hero.titleLine2}</span>
+        </h1>
+        <p class="text-xl md:text-2xl mb-10 max-w-2xl text-gray-200 font-light whitespace-pre-line">{homeConfig.hero.subtitle}</p>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href={homeConfig.hero.buttonPrimaryHref} class="bg-[#E63E00] text-white px-8 py-4 rounded font-bold text-center hover:bg-orange-700 transition uppercase tracking-wider no-underline">{homeConfig.hero.buttonPrimaryText}</a>
+          <a href={homeConfig.hero.buttonSecondaryHref} class="bg-transparent border-2 border-white text-white px-8 py-4 rounded font-bold text-center hover:bg-white hover:text-[#003865] transition uppercase tracking-wider no-underline">{homeConfig.hero.buttonSecondaryText}</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-[#003865] py-10 border-b-4 border-[#E63E00]">
+      <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
+        {metrics.map((metric) => (
+          <div>
+            <div class="text-4xl font-bold mb-1">{metric.value}{metric.unit && <span class="text-xl font-normal">{metric.unit}</span>}</div>
+            <div class="text-gray-300 text-sm">{metric.desc}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    {homeConfig.businessSection?.show === true && cardsEnabled && (
+      <section class="py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16">
+            <h2 class="text-4xl font-extrabold text-[#003865] mb-4">{homeConfig.businessSection?.title || "核心业务领域"}</h2>
+            <div class="w-20 h-1 bg-[#E63E00] mx-auto"></div>
+            <p class="mt-4 text-gray-600 max-w-2xl mx-auto">{homeConfig.businessSection?.desc || ""}</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {topProducts.map((item) => (
+              <div class="group bg-white shadow-xl rounded overflow-hidden hover:-translate-y-2 transition duration-300">
+                <div class="h-56 overflow-hidden">
+                  <button
+                    type="button"
+                    class="w-full h-full block cursor-zoom-in"
+                    data-lightbox-src={item.fullCover || item.cover || "/images/card1.jpg"}
+                    data-lightbox-alt={item.title || "Product"}
+                    aria-label="鏌ョ湅澶у浘"
+                  >
+                    <img src={item.cover || "/images/card1.jpg"} alt={item.title || "Product"} class="w-full h-full object-cover group-hover:scale-105 transition duration-500" style={{ objectPosition: focusPos(item.coverFocus) }} loading="lazy" />
+                  </button>
+                </div>
+                <div class="p-8">
+                  <h3 class="text-2xl font-bold mb-3 text-[#003865]">{item.title}</h3>
+                  <p class="text-gray-600 mb-6 leading-relaxed">{item.summary}</p>
+                  <a href={item.ctaHref || "/zh/contact"} class="text-[#E63E00] font-bold uppercase tracking-wide hover:underline">{item.ctaText || "了解更多"} &rarr;</a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    {bottomListEnabled && bottomList.length > 0 && (
+      <section class="py-14 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4">
+          <h2 class="text-3xl font-extrabold text-[#003865] mb-4 text-center">{bottomTitle}</h2>
+          {bottomSubtitle && <p class="text-gray-600 mb-6 text-center">{bottomSubtitle}</p>}
+          <div
+            class="grid gap-x-6 gap-y-5 justify-items-center"
+            style={{ gridTemplateColumns: `repeat(${bottomCols}, minmax(0, 1fr))` }}
+          >
+            {bottomList.map((item) => (
+              <div class="w-full text-center py-2">
+                <h3 class="text-2xl leading-none font-semibold tracking-tight text-gray-400">{item.title}</h3>
+                {item.summary && <p class="mt-3 text-gray-500 text-base">{item.summary}</p>}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    {homeConfig.cta?.show !== false && (
+      <section class="bg-[#003865] py-12">
+        <div class="max-w-5xl mx-auto px-4 text-center">
+          <h2 class="text-2xl font-bold text-white mb-4">{homeConfig.cta.title}</h2>
+          <p class="text-gray-300 mb-8">{homeConfig.cta.desc}</p>
+          <a href={homeConfig.cta.buttonHref} class="bg-white text-[#003865] px-8 py-3 rounded font-bold hover:bg-gray-100 transition no-underline">{homeConfig.cta.buttonText}</a>
+        </div>
+      </section>
+    )}
+
+    <footer class="bg-[#002845] text-white py-12 border-t-4 border-[#E63E00]">
+      <div class="max-w-7xl mx-auto px-4 text-center text-sm text-gray-400">
+        <p class="mb-2">&copy; {siteConfig.copyrightYear} {siteConfig.companyName} All rights reserved.</p>
+        <p>致力于推动能源行业的技术进步和效率提升</p>
+      </div>
+    </footer>
+  </main>
+</Layout>
+
