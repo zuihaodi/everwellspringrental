@@ -15,7 +15,7 @@
   },
   "metrics": [],
   "businessSection": {
-    "show": true,
+    "show": false,
     "title": "核心业务板块",
     "desc": "油服装备、油田设备、炼化设备、海工装备"
   },
