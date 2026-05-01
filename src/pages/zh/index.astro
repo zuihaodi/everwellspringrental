@@ -54,8 +54,8 @@ const topProducts = cards.map((c: CmsCardItem) => ({
   cover: c.image || "/images/card1.jpg",
   fullCover: toMainImage(c.image) || c.image || "/images/card1.jpg",
   coverFocus: c.imageFocus || "center center",
-  ctaText: c.ctaText || "了解更多",
-  ctaHref: c.ctaHref || "/zh/contact",
+  ctaText: typeof c.ctaText === "string" ? c.ctaText.trim() : "",
+  ctaHref: typeof c.ctaHref === "string" ? c.ctaHref.trim() : "",
 }));
 ---
 
@@ -117,7 +117,9 @@ const topProducts = cards.map((c: CmsCardItem) => ({
                 <div class="p-8">
                   <h3 class="text-2xl font-bold mb-3 text-[#003865]">{item.title}</h3>
                   {item.summary && <p class="text-gray-600 mb-6 leading-relaxed">{item.summary}</p>}
-                  <a href={item.ctaHref || "/zh/contact"} class="text-[#E63E00] font-bold uppercase tracking-wide hover:underline">{item.ctaText || "了解更多"} &rarr;</a>
+                  {item.ctaText && item.ctaHref && (
+                    <a href={item.ctaHref} class="text-[#E63E00] font-bold uppercase tracking-wide hover:underline">{item.ctaText} &rarr;</a>
+                  )}
                 </div>
               </div>
             ))}
