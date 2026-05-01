@@ -54,17 +54,21 @@ function normalizeKey(key: string) {
 
 function buildFixedNav(lang: Lang): NavItem[] {
   const fixed = lang === "zh" ? fixedZh : fixedEn;
-  const cmsItems = loadNavByLang(lang);
+  const cmsItems = loadNavByLang(lang, { includeUnpublished: true });
   const cmsByKey = new Map<string, CmsNavItem>();
+  const publishedByKey = new Map<string, boolean>();
 
   for (const item of cmsItems) {
     if (typeof item.key === "string" && item.key.trim()) {
-      cmsByKey.set(normalizeKey(item.key), item);
+      const key = normalizeKey(item.key);
+      cmsByKey.set(key, item);
+      publishedByKey.set(key, item.published !== false);
     }
   }
 
   const seenOrders = new Set<number>();
   return fixed
+    .filter((base) => publishedByKey.get(base.key) === true)
     .map((base) => {
       const cms = cmsByKey.get(base.key);
       const label = typeof cms?.title === "string" && cms.title.trim() ? cms.title.trim() : base.label;

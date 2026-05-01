@@ -3,13 +3,13 @@
     "title": "关于我们",
     "href": "/zh/about",
     "order": 1,
-    "published": true
+    "published": false
   },
   "page2": {
     "title": "业务板块",
     "href": "/zh/business",
     "order": 2,
-    "published": true
+    "published": false
   },
   "page3": {
     "title": "融资解决方案",

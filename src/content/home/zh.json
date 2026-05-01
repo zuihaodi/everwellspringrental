@@ -1,10 +1,9 @@
 {
   "hero": {
-    "titleLine1": "挑战地心深度",
-    "titleLine2": "刷新亚洲纪录",
-    "subtitle": "掌握12000米超深井钻采技术，创下9396米亚洲最深水平井纪录。\nWELLSPRING RENTAL. —— 您最值得信赖的能源合作伙伴",
-    "buttonPrimaryText": "查看业务板块",
-    "buttonPrimaryHref": "/zh/business",
+    "titleLine1": "油气装备租赁与一体化服务",
+    "subtitle": "以“设备租赁 + 融资合作 + 维保服务”为主线，为国际石油公司、国际油田服务公司及大型工程项目提供设备资产配置方案。",
+    "buttonPrimaryText": "融资解决方案",
+    "buttonPrimaryHref": "/zh/finance",
     "buttonSecondaryText": "联系我们",
     "buttonSecondaryHref": "/zh/contact",
     "bgImage": "/uploads/home/zh/hero/bgImage.png",
@@ -42,8 +41,6 @@
         "title": "油田服务装备",
         "image": "/uploads/home/zh/cards/cardsSection/cards/0/image.jpg",
         "imageFocus": "center center",
-        "ctaText": "了解更多",
-        "ctaHref": "/zh/business",
         "order": 1,
         "published": true
       },
@@ -51,8 +48,6 @@
         "title": "油田设备",
         "image": "/uploads/home/zh/cards/cardsSection/cards/1/image.jpg",
         "imageFocus": "center center",
-        "ctaText": "了解更多",
-        "ctaHref": "/zh/business",
         "order": 2,
         "published": true
       },
@@ -60,8 +55,6 @@
         "title": "炼化设备",
         "image": "/uploads/home/zh/cards/cardsSection/cards/2/image.png",
         "imageFocus": "center center",
-        "ctaText": "了解更多",
-        "ctaHref": "/zh/business",
         "order": 3,
         "published": true
       },
@@ -69,20 +62,18 @@
         "title": "海洋工程装备",
         "image": "/uploads/home/zh/cards/cardsSection/cards/3/image.jpg",
         "imageFocus": "center center",
-        "ctaText": "了解更多",
-        "ctaHref": "/zh/business",
         "order": 4,
         "published": true
       }
     ]
   },
   "bottomSection": {
-    "show": true,
+    "show": false,
     "bottomTitle": "战略合作伙伴",
     "bottomSubtitle": "国家石油公司、国际油服公司"
   },
   "bottomListSection": {
-    "show": true,
+    "show": false,
     "bottomList": [
       {
         "title": "中国石油",
