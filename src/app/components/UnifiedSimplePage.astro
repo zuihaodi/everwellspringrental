@@ -1,17 +1,19 @@
 ---
 import { renderRichText } from "../lib/rich-text";
-import type { CmsCardItem, CmsSimplePageConfig } from "../types/content";
+import type { CmsSimplePageConfig } from "../types/content";
 
 interface Props {
   cfg: CmsSimplePageConfig;
-  cards: CmsCardItem[];
   lang: "zh" | "en";
 }
 
-const { cfg, cards, lang } = Astro.props as Props;
+const { cfg, lang } = Astro.props as Props;
 const isZh = lang === "zh";
 const toMainImage = (src?: string) => (src ? src.replace(/\.sm\.webp$/i, ".webp") : "");
 const focusPos = (value?: string) => value || "center center";
+const sectionGroups = (cfg.sectionGroups || []).filter(
+  (group) => group.show !== false && ((group.title || group.subtitle) || (group.cards && group.cards.length > 0)),
+);
 ---
 
 <main>
@@ -77,45 +79,49 @@ const focusPos = (value?: string) => value || "center center";
     </section>
   )}
 
-  {cfg.middleShow !== false && (cfg.middleTitle || cfg.middleSubtitle) && (
-    <section class="py-12 bg-gray-50">
-      <div class="max-w-7xl mx-auto px-4 text-center">
-        {cfg.middleTitle && <h2 class="text-3xl font-bold text-[#003865]">{cfg.middleTitle}</h2>}
-        {cfg.middleSubtitle && <p class="mt-4 text-gray-600">{cfg.middleSubtitle}</p>}
-      </div>
-    </section>
-  )}
+  {sectionGroups.map((group) => (
+    <>
+      {(group.title || group.subtitle) && (
+        <section class="py-12 bg-gray-50">
+          <div class="max-w-7xl mx-auto px-4 text-center">
+            {group.title && <h2 class="text-3xl font-bold text-[#003865]">{group.title}</h2>}
+            {group.subtitle && <p class="mt-4 text-gray-600">{group.subtitle}</p>}
+          </div>
+        </section>
+      )}
 
-  {cfg.cardsShow !== false && cards.length > 0 && (
-    <section class="py-12 bg-gray-50">
-      <div class="max-w-7xl mx-auto px-4 grid gap-8 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
-        {cards.map((item) => (
-          <article class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-            {item.image && (
-              <div class="h-44 mb-4 overflow-hidden rounded">
-                <button
-                  type="button"
-                  class="w-full h-full block cursor-zoom-in"
-                  data-lightbox-src={toMainImage(item.image)}
-                  data-lightbox-alt={item.title || ""}
-                  aria-label={isZh ? "查看大图" : "View large image"}
-                >
-                  <img src={item.image} alt={item.title} class="w-full h-full object-cover" style={{ objectPosition: focusPos(item.imageFocus) }} loading="lazy" />
-                </button>
-              </div>
-            )}
-            <h3 class="text-xl font-bold text-[#003865] mb-2">{item.title}</h3>
-            <p class="text-gray-600 text-sm mb-4" set:html={renderRichText(item.summary || "")}></p>
-            {item.ctaText && item.ctaHref && (
-              <a href={item.ctaHref} class="text-[#E63E00] font-semibold text-sm hover:underline no-underline">
-                {item.ctaText} &rarr;
-              </a>
-            )}
-          </article>
-        ))}
-      </div>
-    </section>
-  )}
+      {group.cards && group.cards.length > 0 && (
+        <section class="py-12 bg-gray-50">
+          <div class="max-w-7xl mx-auto px-4 grid gap-8 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
+            {group.cards.map((item) => (
+              <article class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                {item.image && (
+                  <div class="h-44 mb-4 overflow-hidden rounded">
+                    <button
+                      type="button"
+                      class="w-full h-full block cursor-zoom-in"
+                      data-lightbox-src={toMainImage(item.image)}
+                      data-lightbox-alt={item.title || ""}
+                      aria-label={isZh ? "查看大图" : "View large image"}
+                    >
+                      <img src={item.image} alt={item.title} class="w-full h-full object-cover" style={{ objectPosition: focusPos(item.imageFocus) }} loading="lazy" />
+                    </button>
+                  </div>
+                )}
+                <h3 class="text-xl font-bold text-[#003865] mb-2">{item.title}</h3>
+                <p class="text-gray-600 text-sm mb-4" set:html={renderRichText(item.summary || "")}></p>
+                {item.ctaText && item.ctaHref && (
+                  <a href={item.ctaHref} class="text-[#E63E00] font-semibold text-sm hover:underline no-underline">
+                    {item.ctaText} &rarr;
+                  </a>
+                )}
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+    </>
+  ))}
 
   {cfg.bottomShow !== false && (cfg.bottomTitle || cfg.bottomSubtitle) && (
     <section class="py-12 bg-gray-50">
@@ -128,7 +134,7 @@ const focusPos = (value?: string) => value || "center center";
 
   {cfg.bottomListShow !== false && cfg.bottomList && cfg.bottomList.length > 0 && (
     <section class="py-8 bg-gray-50">
-      <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="max-w-7xl mx-auto px-4 grid gap-6 [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))]">
         {cfg.bottomList.map((item) => (
           <article class="bg-white border border-gray-200 rounded-lg p-6 text-center">
             <h3 class="text-2xl font-bold text-[#003865] mb-2">{item.title}</h3>

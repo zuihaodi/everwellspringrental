@@ -12,9 +12,13 @@ const fallbackHome: CmsHomeConfig = {
     subtitle:
       `Mastering 12,000m ultra-deep drilling technology. Holder of the 9,396m Asian depth record.\n${siteConfig.shortBrand} - Your most trusted energy partner.`,
     buttonPrimaryText: "Our Business",
-    buttonPrimaryHref: "/en/products",
+    buttonPrimaryHref: "/en/business",
     buttonSecondaryText: "Contact Us",
     buttonSecondaryHref: "/en/contact",
+    buttonTertiaryText: "",
+    buttonTertiaryHref: "",
+    buttonQuaternaryText: "",
+    buttonQuaternaryHref: "",
     bgImage: "/images/hero-bg.jpg",
   },
   metrics: [
@@ -37,7 +41,7 @@ const fallbackHome: CmsHomeConfig = {
 };
 
 const homeConfig = loadHomeByLang("en") || fallbackHome;
-const metrics = homeConfig.metrics?.length ? homeConfig.metrics : fallbackHome.metrics;
+const metrics = homeConfig.metrics || [];
 
 const cardsEnabled = homeConfig.cardsSection?.show !== false;
 const cards = cardsEnabled ? homeConfig.cardsSection?.cards?.filter((c) => c.title) || [] : [];
@@ -48,6 +52,12 @@ const bottomSubtitle = homeConfig.bottomSection?.bottomSubtitle || homeConfig.bo
 const bottomCols = Math.min(8, Math.max(bottomList.length, 1));
 const toMainImage = (src?: string) => (src ? src.replace(/\.sm\.webp$/i, ".webp") : "");
 const focusPos = (value?: string) => value || "center center";
+const heroButtons = [
+  { text: homeConfig.hero.buttonPrimaryText, href: homeConfig.hero.buttonPrimaryHref },
+  { text: homeConfig.hero.buttonSecondaryText, href: homeConfig.hero.buttonSecondaryHref },
+  { text: homeConfig.hero.buttonTertiaryText, href: homeConfig.hero.buttonTertiaryHref },
+  { text: homeConfig.hero.buttonQuaternaryText, href: homeConfig.hero.buttonQuaternaryHref },
+].filter((button) => typeof button.text === "string" && button.text.trim() && typeof button.href === "string" && button.href.trim());
 const topProducts = cards.map((c: CmsCardItem) => ({
   title: c.title || "",
   summary: c.summary || "",
@@ -73,23 +83,30 @@ const topProducts = cards.map((c: CmsCardItem) => ({
           <span class="text-[#E63E00]">{homeConfig.hero.titleLine2}</span>
         </h1>
         <p class="text-xl md:text-2xl mb-10 max-w-2xl text-gray-200 font-light whitespace-pre-line">{homeConfig.hero.subtitle}</p>
-        <div class="flex flex-col sm:flex-row gap-4">
-          <a href={homeConfig.hero.buttonPrimaryHref} class="bg-[#E63E00] text-white px-8 py-4 rounded font-bold text-center hover:bg-orange-700 transition uppercase tracking-wider no-underline">{homeConfig.hero.buttonPrimaryText}</a>
-          <a href={homeConfig.hero.buttonSecondaryHref} class="bg-transparent border-2 border-white text-white px-8 py-4 rounded font-bold text-center hover:bg-white hover:text-[#003865] transition uppercase tracking-wider no-underline">{homeConfig.hero.buttonSecondaryText}</a>
-        </div>
+        {heroButtons.length > 0 && (
+          <div class="flex flex-col sm:flex-row sm:flex-wrap gap-4">
+            {heroButtons.map((button) => (
+              <a href={button.href} class="bg-[#E63E00] text-white px-8 py-4 rounded font-bold text-center hover:bg-orange-700 transition uppercase tracking-wider no-underline">
+                {button.text}
+              </a>
+            ))}
+          </div>
+        )}
       </div>
     </section>
 
-    <section class="bg-[#003865] py-10 border-b-4 border-[#E63E00]">
-      <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
-        {metrics.map((metric) => (
-          <div>
-            <div class="text-4xl font-bold mb-1">{metric.value}{metric.unit && <span class="text-xl font-normal">{metric.unit}</span>}</div>
-            <div class="text-gray-300 text-sm">{metric.desc}</div>
-          </div>
-        ))}
-      </div>
-    </section>
+    {metrics.length > 0 && (
+      <section class="bg-[#003865] py-10 border-b-4 border-[#E63E00]">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
+          {metrics.map((metric) => (
+            <div>
+              <div class="text-4xl font-bold mb-1">{metric.value}{metric.unit && <span class="text-xl font-normal">{metric.unit}</span>}</div>
+              <div class="text-gray-300 text-sm">{metric.desc}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
 
     {homeConfig.businessSection?.show === true && cardsEnabled && (
       <section class="py-24 bg-gray-50">

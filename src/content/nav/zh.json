@@ -3,19 +3,19 @@
     "title": "关于我们",
     "href": "/zh/about",
     "order": 1,
-    "published": false
+    "published": true
   },
   "page2": {
-    "title": "业务板块",
+    "title": "主营业务",
     "href": "/zh/business",
     "order": 2,
-    "published": false
+    "published": true
   },
   "page3": {
     "title": "融资解决方案",
     "href": "/zh/finance",
     "order": 3,
-    "published": true
+    "published": false
   },
   "page4": {
     "title": "公司业绩",

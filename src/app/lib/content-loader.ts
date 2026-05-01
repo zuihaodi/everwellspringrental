@@ -5,6 +5,7 @@
   CmsHomeConfig,
   CmsMetricItem,
   CmsNavItem,
+  CmsPageSectionGroup,
   CmsSimplePageConfig,
 } from "../types/content";
 
@@ -16,6 +17,7 @@ type CmsNavConfig = Partial<Record<PageSlot, Omit<CmsNavItem, "key">>>;
 type LoadNavOptions = { includeUnpublished?: boolean };
 
 type JsonValue = Record<string, unknown> | unknown[] | string | number | boolean | null;
+const BLANK_TOKEN = "#blank#";
 
 const contentJsonModules = import.meta.glob<JsonValue>("/src/content/**/*.json", {
   eager: true,
@@ -55,12 +57,29 @@ function hasText(value?: string): value is string {
   return typeof value === "string" && value.trim().length > 0;
 }
 
+function isBlankToken(value?: string) {
+  return typeof value === "string" && value.trim().toLowerCase() === BLANK_TOKEN;
+}
+
+function hasDisplayText(value?: string): value is string {
+  return hasText(value) && !isBlankToken(value);
+}
+
 function textOr(primary?: string, fallback?: string) {
   return hasText(primary) ? primary : fallback || "";
 }
 
+function textOrHidden(primary?: string, fallback?: string) {
+  if (isBlankToken(primary)) return "";
+  if (hasText(primary)) return primary;
+  if (isBlankToken(fallback)) return "";
+  return fallback || "";
+}
+
 function textOrBlank(primary?: string, fallback?: string) {
+  if (isBlankToken(primary)) return "";
   if (typeof primary === "string") return primary.trim();
+  if (isBlankToken(fallback)) return "";
   if (typeof fallback === "string") return fallback.trim();
   return "";
 }
@@ -119,29 +138,70 @@ function normalizeMetrics(list?: CmsMetricItem[], fallback?: CmsMetricItem[]) {
 function normalizeBottomList(list?: CmsBottomListItem[], fallback?: CmsBottomListItem[]) {
   const source = list && list.length > 0 ? list : fallback && fallback.length > 0 ? fallback : [];
   return source
-    .filter((item) => hasText(item?.title) || hasText(item?.summary));
+    .filter((item) => hasDisplayText(item?.title) || hasDisplayText(item?.summary))
+    .map((item) => ({
+      ...item,
+      title: textOrBlank(item?.title),
+      summary: textOrBlank(item?.summary),
+    }));
 }
 
 function normalizeContactInfo(primary?: CmsContactInfo, fallback?: CmsContactInfo): CmsContactInfo {
   return {
     show: boolOr(primary?.show, fallback?.show, false),
-    title: textOr(primary?.title, fallback?.title),
-    addressLine1: textOr(primary?.addressLine1, fallback?.addressLine1),
-    addressLine2: textOr(primary?.addressLine2, fallback?.addressLine2),
-    email: textOr(primary?.email, fallback?.email),
-    phone: textOr(primary?.phone, fallback?.phone),
+    title: textOrHidden(primary?.title, fallback?.title),
+    addressLine1: textOrHidden(primary?.addressLine1, fallback?.addressLine1),
+    addressLine2: textOrHidden(primary?.addressLine2, fallback?.addressLine2),
+    email: textOrHidden(primary?.email, fallback?.email),
+    phone: textOrHidden(primary?.phone, fallback?.phone),
   };
 }
 
 function normalizeInlineCards(list?: CmsCardItem[]) {
   if (!Array.isArray(list)) return [];
   return list
-    .filter((item) => item?.published !== false && (hasText(item?.title) || hasText(item?.summary)))
+    .filter((item) => item?.published !== false && (hasDisplayText(item?.title) || hasDisplayText(item?.summary)))
     .map((item) => ({
       ...item,
+      title: textOrBlank(item.title),
+      summary: textOrBlank(item.summary),
+      ctaText: textOrBlank(item.ctaText),
+      ctaHref: textOrBlank(item.ctaHref),
       image: item.image,
       imageFocus: normalizeFocus(item.imageFocus),
     }));
+}
+
+function normalizeSectionGroups(
+  groups?: CmsPageSectionGroup[],
+  fallbackTitle?: string,
+  fallbackSubtitle?: string,
+  fallbackCards?: CmsCardItem[],
+) {
+  const normalized = (Array.isArray(groups) ? groups : [])
+    .map((group) => ({
+      show: group?.show ?? true,
+      title: textOrHidden(group?.title),
+      subtitle: textOrHidden(group?.subtitle),
+      cards: normalizeInlineCards(group?.cards),
+    }))
+    .filter((group) => group.show !== false && (hasDisplayText(group.title) || hasDisplayText(group.subtitle) || group.cards.length > 0));
+
+  if (normalized.length > 0) return normalized;
+
+  const legacyCards = normalizeInlineCards(fallbackCards);
+  const legacyTitle = textOrHidden(fallbackTitle);
+  const legacySubtitle = textOrHidden(fallbackSubtitle);
+  if (!hasDisplayText(legacyTitle) && !hasDisplayText(legacySubtitle) && legacyCards.length === 0) return [];
+
+  return [
+    {
+      show: true,
+      title: legacyTitle,
+      subtitle: legacySubtitle,
+      cards: legacyCards,
+    },
+  ];
 }
 
 function mergeLocalizedCards(zhList?: CmsCardItem[], enList?: CmsCardItem[]) {
@@ -166,8 +226,8 @@ function mergeLocalizedCards(zhList?: CmsCardItem[], enList?: CmsCardItem[]) {
     return {
       ...zhCard,
       ...enCard,
-      title: textOr(enCard?.title, zhCard?.title),
-      summary: textOr(enCard?.summary, zhCard?.summary),
+      title: textOrHidden(enCard?.title, zhCard?.title),
+      summary: textOrHidden(enCard?.summary, zhCard?.summary),
       image: resolveLocalizedImage(enCard?.image, zhCard?.image, "small"),
       imageFocus: resolveLocalizedFocus(enCard?.imageFocus, zhCard?.imageFocus),
       ctaText: textOrBlank(enCard?.ctaText, zhCard?.ctaText),
@@ -182,6 +242,27 @@ function mergeLocalizedCards(zhList?: CmsCardItem[], enList?: CmsCardItem[]) {
     const key = normalizeKey(enCard?.key);
     if ((key && usedKeys.has(key)) || usedIndex.has(i)) continue;
     merged.push(enCard);
+  }
+
+  return merged;
+}
+
+function mergeLocalizedSectionGroups(zhGroups?: CmsPageSectionGroup[], enGroups?: CmsPageSectionGroup[]) {
+  const base = Array.isArray(zhGroups) ? zhGroups : [];
+  const localized = Array.isArray(enGroups) ? enGroups : [];
+  const length = Math.max(base.length, localized.length);
+  const merged: CmsPageSectionGroup[] = [];
+
+  for (let i = 0; i < length; i++) {
+    const zhGroup = base[i];
+    const enGroup = localized[i];
+    if (!zhGroup && !enGroup) continue;
+    merged.push({
+      show: typeof enGroup?.show === "boolean" ? enGroup.show : zhGroup?.show,
+      title: textOrHidden(enGroup?.title, zhGroup?.title),
+      subtitle: textOrHidden(enGroup?.subtitle, zhGroup?.subtitle),
+      cards: mergeLocalizedCards(zhGroup?.cards, enGroup?.cards),
+    });
   }
 
   return merged;
@@ -257,29 +338,33 @@ export function loadHomeByLang(lang: "zh" | "en"): CmsHomeConfig | null {
         hero: {
           ...zhCfg.hero,
           ...cfg.hero,
-          titleLine1: hasText(cfg.hero?.titleLine1) ? cfg.hero.titleLine1 : zhCfg.hero.titleLine1,
-          titleLine2: hasText(cfg.hero?.titleLine2) ? cfg.hero.titleLine2 : zhCfg.hero.titleLine2,
-          subtitle: hasText(cfg.hero?.subtitle) ? cfg.hero.subtitle : zhCfg.hero.subtitle,
-          buttonPrimaryText: hasText(cfg.hero?.buttonPrimaryText) ? cfg.hero.buttonPrimaryText : zhCfg.hero.buttonPrimaryText,
-          buttonPrimaryHref: hasText(cfg.hero?.buttonPrimaryHref) ? cfg.hero.buttonPrimaryHref : zhCfg.hero.buttonPrimaryHref,
-          buttonSecondaryText: hasText(cfg.hero?.buttonSecondaryText) ? cfg.hero.buttonSecondaryText : zhCfg.hero.buttonSecondaryText,
-          buttonSecondaryHref: hasText(cfg.hero?.buttonSecondaryHref) ? cfg.hero.buttonSecondaryHref : zhCfg.hero.buttonSecondaryHref,
+          titleLine1: textOrHidden(cfg.hero?.titleLine1, zhCfg.hero.titleLine1),
+          titleLine2: textOrHidden(cfg.hero?.titleLine2, zhCfg.hero.titleLine2),
+          subtitle: textOrHidden(cfg.hero?.subtitle, zhCfg.hero.subtitle),
+          buttonPrimaryText: textOrBlank(cfg.hero?.buttonPrimaryText, zhCfg.hero.buttonPrimaryText),
+          buttonPrimaryHref: textOrBlank(cfg.hero?.buttonPrimaryHref, zhCfg.hero.buttonPrimaryHref),
+          buttonSecondaryText: textOrBlank(cfg.hero?.buttonSecondaryText, zhCfg.hero.buttonSecondaryText),
+          buttonSecondaryHref: textOrBlank(cfg.hero?.buttonSecondaryHref, zhCfg.hero.buttonSecondaryHref),
+          buttonTertiaryText: textOrBlank(cfg.hero?.buttonTertiaryText, zhCfg.hero.buttonTertiaryText),
+          buttonTertiaryHref: textOrBlank(cfg.hero?.buttonTertiaryHref, zhCfg.hero.buttonTertiaryHref),
+          buttonQuaternaryText: textOrBlank(cfg.hero?.buttonQuaternaryText, zhCfg.hero.buttonQuaternaryText),
+          buttonQuaternaryHref: textOrBlank(cfg.hero?.buttonQuaternaryHref, zhCfg.hero.buttonQuaternaryHref),
           bgImage: hasText(cfg.hero?.bgImage) ? cfg.hero.bgImage : zhCfg.hero.bgImage,
           bgImageFocus: hasText(cfg.hero?.bgImageFocus) ? cfg.hero.bgImageFocus : zhCfg.hero.bgImageFocus,
         },
         cta: {
           ...zhCfg.cta,
           ...cfg.cta,
-          title: hasText(cfg.cta?.title) ? cfg.cta.title : zhCfg.cta.title,
-          desc: hasText(cfg.cta?.desc) ? cfg.cta.desc : zhCfg.cta.desc,
-          buttonText: hasText(cfg.cta?.buttonText) ? cfg.cta.buttonText : zhCfg.cta.buttonText,
-          buttonHref: hasText(cfg.cta?.buttonHref) ? cfg.cta.buttonHref : zhCfg.cta.buttonHref,
+          title: textOrHidden(cfg.cta?.title, zhCfg.cta.title),
+          desc: textOrHidden(cfg.cta?.desc, zhCfg.cta.desc),
+          buttonText: textOrBlank(cfg.cta?.buttonText, zhCfg.cta.buttonText),
+          buttonHref: textOrBlank(cfg.cta?.buttonHref, zhCfg.cta.buttonHref),
         },
         businessSection: {
           ...zhCfg.businessSection,
           ...cfg.businessSection,
-          title: hasText(cfg.businessSection?.title) ? cfg.businessSection.title : zhCfg.businessSection.title,
-          desc: hasText(cfg.businessSection?.desc) ? cfg.businessSection.desc : zhCfg.businessSection.desc,
+          title: textOrHidden(cfg.businessSection?.title, zhCfg.businessSection.title),
+          desc: textOrHidden(cfg.businessSection?.desc, zhCfg.businessSection.desc),
           show: typeof cfg.businessSection?.show === "boolean" ? cfg.businessSection.show : zhCfg.businessSection.show,
         },
         metrics:
@@ -315,6 +400,17 @@ export function loadHomeByLang(lang: "zh" | "en"): CmsHomeConfig | null {
     ...cfg,
     hero: {
       ...cfg.hero,
+      titleLine1: textOrHidden(cfg.hero?.titleLine1),
+      titleLine2: textOrHidden(cfg.hero?.titleLine2),
+      subtitle: textOrHidden(cfg.hero?.subtitle),
+      buttonPrimaryText: textOrBlank(cfg.hero?.buttonPrimaryText),
+      buttonPrimaryHref: textOrBlank(cfg.hero?.buttonPrimaryHref),
+      buttonSecondaryText: textOrBlank(cfg.hero?.buttonSecondaryText),
+      buttonSecondaryHref: textOrBlank(cfg.hero?.buttonSecondaryHref),
+      buttonTertiaryText: textOrBlank(cfg.hero?.buttonTertiaryText),
+      buttonTertiaryHref: textOrBlank(cfg.hero?.buttonTertiaryHref),
+      buttonQuaternaryText: textOrBlank(cfg.hero?.buttonQuaternaryText),
+      buttonQuaternaryHref: textOrBlank(cfg.hero?.buttonQuaternaryHref),
       bgImage: resolveLocalizedImage(cfg.hero?.bgImage),
       bgImageFocus: normalizeFocus(cfg.hero?.bgImageFocus),
     },
@@ -429,6 +525,8 @@ export function loadSimplePageByLang(page: SimplePageKey, lang: Lang): CmsSimple
     zhCfg = readSimplePageConfig("zh", slot);
     if (zhCfg && cfg) {
       cfg = { ...zhCfg, ...cfg };
+      const mergedGroups = mergeLocalizedSectionGroups(zhCfg.sectionGroups, cfg.sectionGroups);
+      if (mergedGroups.length > 0) cfg.sectionGroups = mergedGroups;
     } else if (!cfg && zhCfg) {
       cfg = zhCfg;
     }
@@ -452,6 +550,7 @@ export function loadSimplePageByLang(page: SimplePageKey, lang: Lang): CmsSimple
   const enHeroSectionValue = sectionContent(enCfg?.heroSection);
   const zhCards = sectionContent(zhCfg?.cardsSection)?.cards;
   const enCards = sectionContent(enCfg?.cardsSection)?.cards;
+  const localizedLegacyCards = lang === "en" ? mergeLocalizedCards(zhCards, enCards) : cardsSectionValue?.cards;
 
   const finalImage = hasMainSection
     ? resolveLocalizedImage(lang === "en" ? enMainSectionValue?.image : mainSectionValue?.image, lang === "en" ? zhMainSectionValue?.image : undefined)
@@ -482,18 +581,24 @@ export function loadSimplePageByLang(page: SimplePageKey, lang: Lang): CmsSimple
   const bottomShow = boolOr(sectionToggle(cfg.bottomSection), boolOr(cfg.bottomShow, defaults.bottomShow, true), true);
   const bottomListShow = boolOr(sectionToggle(cfg.bottomListSection), boolOr(cfg.bottomListShow, defaults.bottomListShow, true), true);
   const contactShow = boolOr(sectionToggle(cfg.contactSection), boolOr(cfg.contactInfo?.show, defaults.contactInfo?.show, false), false);
+  const sectionGroups = normalizeSectionGroups(
+    cfg.sectionGroups,
+    middleSectionValue?.middleTitle ?? cfg.middleTitle ?? defaults.middleTitle,
+    middleSectionValue?.middleSubtitle ?? cfg.middleSubtitle ?? defaults.middleSubtitle,
+    localizedLegacyCards,
+  );
 
   return {
     ...defaults,
     ...cfg,
-    heroTitle: textOr(heroSectionValue?.heroTitle, textOr(cfg.heroTitle, defaults.heroTitle)),
-    heroSubtitle: textOr(heroSectionValue?.heroSubtitle, textOr(cfg.heroSubtitle, defaults.heroSubtitle)),
-    sectionTitle: textOr(mainSectionValue?.sectionTitle, textOr(cfg.sectionTitle, defaults.sectionTitle)),
-    sectionBody: textOr(mainSectionValue?.sectionBody, textOr(cfg.sectionBody, defaults.sectionBody)),
-    middleTitle: textOr(middleSectionValue?.middleTitle, textOr(cfg.middleTitle, defaults.middleTitle)),
-    middleSubtitle: textOr(middleSectionValue?.middleSubtitle, textOr(cfg.middleSubtitle, defaults.middleSubtitle)),
-    bottomTitle: textOr(bottomSectionValue?.bottomTitle, textOr(cfg.bottomTitle, defaults.bottomTitle)),
-    bottomSubtitle: textOr(bottomSectionValue?.bottomSubtitle, textOr(cfg.bottomSubtitle, defaults.bottomSubtitle)),
+    heroTitle: textOrHidden(heroSectionValue?.heroTitle, textOrHidden(cfg.heroTitle, defaults.heroTitle)),
+    heroSubtitle: textOrHidden(heroSectionValue?.heroSubtitle, textOrHidden(cfg.heroSubtitle, defaults.heroSubtitle)),
+    sectionTitle: textOrHidden(mainSectionValue?.sectionTitle, textOrHidden(cfg.sectionTitle, defaults.sectionTitle)),
+    sectionBody: textOrHidden(mainSectionValue?.sectionBody, textOrHidden(cfg.sectionBody, defaults.sectionBody)),
+    middleTitle: textOrHidden(middleSectionValue?.middleTitle, textOrHidden(cfg.middleTitle, defaults.middleTitle)),
+    middleSubtitle: textOrHidden(middleSectionValue?.middleSubtitle, textOrHidden(cfg.middleSubtitle, defaults.middleSubtitle)),
+    bottomTitle: textOrHidden(bottomSectionValue?.bottomTitle, textOrHidden(cfg.bottomTitle, defaults.bottomTitle)),
+    bottomSubtitle: textOrHidden(bottomSectionValue?.bottomSubtitle, textOrHidden(cfg.bottomSubtitle, defaults.bottomSubtitle)),
     sectionPrimaryButtonText: textOrBlank(mainSectionValue?.sectionPrimaryButtonText, cfg.sectionPrimaryButtonText),
     sectionPrimaryButtonHref: textOrBlank(mainSectionValue?.sectionPrimaryButtonHref, cfg.sectionPrimaryButtonHref),
     sectionSecondaryButtonText: textOrBlank(mainSectionValue?.sectionSecondaryButtonText, cfg.sectionSecondaryButtonText),
@@ -511,19 +616,20 @@ export function loadSimplePageByLang(page: SimplePageKey, lang: Lang): CmsSimple
     heroBgFocus: finalBgFocus,
     metrics: normalizeMetrics(metricsSectionValue?.metrics, normalizeMetrics(cfg.metrics, defaults.metrics)),
     bottomList: normalizeBottomList(bottomListSectionValue?.bottomList, normalizeBottomList(cfg.bottomList, defaults.bottomList)),
+    sectionGroups,
     cardsSection: {
       ...(cfg.cardsSection || {}),
       show: cardsShow,
-      cards: normalizeInlineCards(lang === "en" ? mergeLocalizedCards(zhCards, enCards) : cardsSectionValue?.cards),
+      cards: normalizeInlineCards(localizedLegacyCards),
     },
     contactInfo: normalizeContactInfo(
       {
         show: contactShow,
-        title: textOr(contactSectionValue?.title, cfg.contactInfo?.title),
-        addressLine1: textOr(contactSectionValue?.addressLine1, cfg.contactInfo?.addressLine1),
-        addressLine2: textOr(contactSectionValue?.addressLine2, cfg.contactInfo?.addressLine2),
-        email: textOr(contactSectionValue?.email, cfg.contactInfo?.email),
-        phone: textOr(contactSectionValue?.phone, cfg.contactInfo?.phone),
+        title: textOrHidden(contactSectionValue?.title, cfg.contactInfo?.title),
+        addressLine1: textOrHidden(contactSectionValue?.addressLine1, cfg.contactInfo?.addressLine1),
+        addressLine2: textOrHidden(contactSectionValue?.addressLine2, cfg.contactInfo?.addressLine2),
+        email: textOrHidden(contactSectionValue?.email, cfg.contactInfo?.email),
+        phone: textOrHidden(contactSectionValue?.phone, cfg.contactInfo?.phone),
       },
       defaults.contactInfo,
     ),
@@ -535,6 +641,6 @@ export function loadCardsByLangPage(
   pageKey: SimplePageKey,
 ): CmsCardItem[] {
   const pageCfg = loadSimplePageByLang(pageKey, lang);
-  return normalizeInlineCards(pageCfg.cardsSection?.cards);
+  return (pageCfg.sectionGroups || []).flatMap((group) => group.cards || []);
 }
 

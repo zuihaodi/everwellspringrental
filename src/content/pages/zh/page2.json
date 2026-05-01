@@ -1,66 +1,135 @@
 {
   "heroSection": {
     "show": true,
-    "heroTitle": "业务模式",
+    "heroTitle": "主营业务",
     "heroSubtitle": "以“设备租赁 + 融资合作 + 维保服务”为主线，为国际石油公司、国际油田服务公司及大型工程项目提供设备资产配置方案。",
     "heroBgFocus": "center center"
   },
   "mainSection": {
-    "show": false,
+    "show": true,
+    "sectionTitle": "合作模式",
+    "sectionBody": "方式一：石油设备租赁，设备经营性租赁，合作期限灵活协商\n方式二：石油设备以租代买，设备以租代买，分期付款\n方式三：联合体承接，共同承接业务，整体打包融资，业务协议分包",
+    "image": "/uploads/pages/zh/page2/mainSection/image.jpg",
     "imageFocus": "center center"
   },
   "metricsSection": {
     "show": false,
     "metrics": []
   },
+  "sectionGroups": [
+    {
+      "show": true,
+      "title": "合作模式示意图",
+      "subtitle": "设备租赁|以租代买|联合体承接",
+      "cards": [
+        {
+          "title": "设备租赁（点击放大）",
+          "summary": "设备经营性租赁，合作期限灵活协商\n1.租期灵活；2.改善现金流；3.消除大额固定资产投资风险；4.提升项目效率",
+          "image": "/uploads/pages/zh/page2/cards/sectionGroups/0/cards/0/image.png",
+          "imageFocus": "center center",
+          "order": 1,
+          "published": true
+        },
+        {
+          "title": "以租代购（点击放大）",
+          "summary": "客户按期支付租金，满额结清后转移设备所有权。",
+          "image": "/uploads/pages/zh/page2/cards/sectionGroups/0/cards/1/image.png",
+          "imageFocus": "center center",
+          "order": 2,
+          "published": true
+        }
+      ]
+    },
+    {
+      "show": true,
+      "title": "合作特点",
+      "subtitle": "可根据项目需求，进行方式、内容、条件定制化解决方案",
+      "cards": [
+        {
+          "title": "方式自由选择",
+          "summary": "◼三种合作方式可根据项目进行自由选择\n◼项目方案量身定制",
+          "image": "/uploads/pages/zh/page2/cards/sectionGroups/1/cards/0/image.jpg",
+          "imageFocus": "center center",
+          "order": 1,
+          "published": true
+        },
+        {
+          "title": "设备自由选择",
+          "summary": "◼可自行选择供应商\n◼我方可推荐供应商\n◼设备维护运营可选择",
+          "image": "/uploads/pages/zh/page2/cards/sectionGroups/1/cards/1/image.jpg",
+          "imageFocus": "center center",
+          "order": 2,
+          "published": true
+        },
+        {
+          "title": "条件自由选择",
+          "summary": "◼设备产权持有可选择\n◼合作期限可选择\n◼合作资源协同",
+          "image": "/uploads/pages/zh/page2/cards/sectionGroups/1/cards/2/image.jpg",
+          "imageFocus": "center center",
+          "order": 3,
+          "published": true
+        }
+      ]
+    }
+  ],
   "middleSection": {
     "show": true,
-    "middleTitle": "核心板块",
-    "middleSubtitle": "EVER WELLSPRING RENTAL PTE. LTD.业务覆盖油田服务装备、炼化设备、海洋工程装备以及净化处理装置等领域。"
+    "middleTitle": "合作模式示意图",
+    "middleSubtitle": "设备租赁|以租代买|联合体承接"
   },
   "cardsSection": {
     "show": true,
     "cards": [
       {
-        "title": "石油服务装备",
-        "summary": "油气钻机\n压裂车\n修井机",
-        "image": "/uploads/pages/zh/page2/cards/cardsSection/cards/0/image.jpg",
+        "image": "/uploads/pages/zh/page2/cards/cardsSection/cards/0/image.png",
         "imageFocus": "center center",
         "order": 1,
         "published": true
       },
       {
-        "title": "油田设备",
-        "summary": "净化处理装置\n油水分离器\n注水注汽设备",
-        "image": "/uploads/pages/zh/page2/cards/cardsSection/cards/1/image.jpg",
+        "title": "以租代购（点击放大）",
+        "summary": "客户按期支付租金，满额结清后转移设备所有权。以租代购（点击放大）",
+        "image": "/uploads/pages/zh/page2/cards/cardsSection/cards/1/image.png",
         "imageFocus": "center center",
         "order": 2,
-        "published": true
-      },
-      {
-        "title": "炼化设备",
-        "summary": "大型离心压缩机\n烟气轮机\n汽轮机",
-        "image": "/uploads/pages/zh/page2/cards/cardsSection/cards/2/image.png",
-        "imageFocus": "center center",
-        "order": 3,
-        "published": true
-      },
-      {
-        "title": "海洋工程装备",
-        "summary": "钻井平台\n海上防喷器组\n水下采油树",
-        "image": "/uploads/pages/zh/page2/cards/cardsSection/cards/3/image.jpg",
-        "imageFocus": "center center",
-        "order": 4,
         "published": true
       }
     ]
   },
   "bottomSection": {
-    "show": false
+    "show": true,
+    "bottomTitle": "合作优势",
+    "bottomSubtitle": "#blank#"
   },
   "bottomListSection": {
-    "show": false,
-    "bottomList": []
+    "show": true,
+    "bottomList": [
+      {
+        "title": "降低综合成本",
+        "summary": "降低企业人力、资金、设备等综合成本",
+        "order": 1
+      },
+      {
+        "title": "降低项目运营风险",
+        "summary": "降低设备、人员等整体项目运营风险",
+        "order": 2
+      },
+      {
+        "title": "转移公司负债",
+        "summary": "项目负债转移出公司可选择由我司承担",
+        "order": 3
+      },
+      {
+        "title": "减轻项目压力",
+        "summary": "可提供后续运营、人员、配件、维修等服务",
+        "order": 4
+      },
+      {
+        "title": "优化公司财务管理",
+        "summary": "缓解公司现金流压力，优化财务管理，便于信息披露",
+        "order": 5
+      }
+    ]
   },
   "contactSection": {
     "show": false

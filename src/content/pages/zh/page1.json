@@ -2,13 +2,13 @@
   "heroSection": {
     "show": true,
     "heroTitle": "关于我们",
-    "heroSubtitle": "源于 2002，深耕能源行业二十余载",
+    "heroSubtitle": "深耕能源行业二十余载",
     "heroBgFocus": "center center"
   },
   "mainSection": {
     "show": true,
-    "sectionTitle": "关于我们",
-    "sectionBody": "EVER WELLSPRING RENTAL PTE. LTD.拥有三十年以上发展历史，是专注于油气装备租赁的大型跨国公司，业务覆盖油田服务装备、炼化设备、海洋工程装备以及净化处理装置等领域。",
+    "sectionTitle": "公司介绍",
+    "sectionBody": "恒沣能源有限公司，成立于2002年，总部位于北京，从油气设备生产、研发、销售、租赁的公司已经成长为涵盖油服设备、油田装备、炼化设备、海工装备的综合服务提供商，致力于为全球油气行业客户提供定制化解决方案。",
     "image": "/uploads/pages/zh/page1/mainSection/image.jpg",
     "imageFocus": "right center"
   },
@@ -16,10 +16,11 @@
     "show": false,
     "metrics": []
   },
+  "sectionGroups": [],
   "middleSection": {
     "show": false,
-    "middleTitle": "核心优势",
-    "middleSubtitle": "面向全球客户的长期协作能力"
+    "middleTitle": "#blank# ",
+    "middleSubtitle": "#blank# "
   },
   "cardsSection": {
     "show": true,

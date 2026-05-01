@@ -16,18 +16,23 @@
     "show": false,
     "metrics": []
   },
+  "sectionGroups": [],
   "middleSection": {
-    "show": false
+    "show": false,
+    "middleTitle": "#blank#",
+    "middleSubtitle": "#blank#"
   },
   "cardsSection": {
     "show": false,
     "cards": []
   },
   "bottomSection": {
-    "show": false
+    "show": false,
+    "bottomTitle": "#blank#",
+    "bottomSubtitle": "#blank#"
   },
   "bottomListSection": {
-    "show": true,
+    "show": false,
     "bottomList": []
   },
   "contactSection": {

@@ -2,43 +2,28 @@
   "hero": {
     "titleLine1": "油气装备租赁与一体化服务",
     "subtitle": "以“设备租赁 + 融资合作 + 维保服务”为主线，为国际石油公司、国际油田服务公司及大型工程项目提供设备资产配置方案。",
-    "buttonPrimaryText": "融资解决方案",
-    "buttonPrimaryHref": "/zh/finance",
-    "buttonSecondaryText": "联系我们",
-    "buttonSecondaryHref": "/zh/contact",
+    "buttonPrimaryText": "关于我们",
+    "buttonPrimaryHref": "/zh/about",
+    "buttonSecondaryText": "主营业务",
+    "buttonSecondaryHref": "/zh/business",
+    "buttonTertiaryText": "公司业绩",
+    "buttonTertiaryHref": "/zh/project",
+    "buttonQuaternaryText": "联系我们",
+    "buttonQuaternaryHref": "/zh/contact",
     "bgImage": "/uploads/home/zh/hero/bgImage.png",
     "bgImageFocus": "center center"
   },
-  "metrics": [
-    {
-      "value": "2002",
-      "unit": "年",
-      "desc": "行业积淀始于"
-    },
-    {
-      "value": "9396",
-      "unit": "米",
-      "desc": "亚洲钻探深度纪录"
-    },
-    {
-      "value": "CNPC",
-      "desc": "中石油一级供应商"
-    },
-    {
-      "value": "ISO",
-      "desc": "全体系质量认证"
-    }
-  ],
+  "metrics": [],
   "businessSection": {
     "show": true,
     "title": "核心业务板块",
-    "desc": "油田服务装备、油田设备、炼化设备、海洋工程装备"
+    "desc": "油服装备、油田设备、炼化设备、海工装备"
   },
   "cardsSection": {
     "show": true,
     "cards": [
       {
-        "title": "油田服务装备",
+        "title": "油服装备",
         "image": "/uploads/home/zh/cards/cardsSection/cards/0/image.jpg",
         "imageFocus": "center center",
         "order": 1,
@@ -59,7 +44,7 @@
         "published": true
       },
       {
-        "title": "海洋工程装备",
+        "title": "海工装备",
         "image": "/uploads/home/zh/cards/cardsSection/cards/3/image.jpg",
         "imageFocus": "center center",
         "order": 4,

@@ -109,6 +109,13 @@ export interface CmsContactInfo {
   phone?: string;
 }
 
+export interface CmsPageSectionGroup {
+  show?: boolean;
+  title?: string;
+  subtitle?: string;
+  cards?: CmsCardItem[];
+}
+
 export interface CmsLegacyConditionalSection<T extends object> {
   discriminant?: boolean;
   value?: T;
@@ -134,6 +141,10 @@ export interface HomeHeroConfig {
   buttonPrimaryHref: string;
   buttonSecondaryText: string;
   buttonSecondaryHref: string;
+  buttonTertiaryText?: string;
+  buttonTertiaryHref?: string;
+  buttonQuaternaryText?: string;
+  buttonQuaternaryHref?: string;
   bgImage: string;
   bgImageFocus?: string;
 }
@@ -193,6 +204,7 @@ export interface CmsSimplePageConfig {
   metrics?: CmsMetricItem[];
   bottomList?: CmsBottomListItem[];
   contactInfo?: CmsContactInfo;
+  sectionGroups?: CmsPageSectionGroup[];
   heroSection?: CmsSectionToggle<{
     heroTitle?: string;
     heroSubtitle?: string;
