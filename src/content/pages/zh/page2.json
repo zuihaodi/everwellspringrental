@@ -48,7 +48,6 @@
         {
           "title": "方式自由选择",
           "summary": "◼三种合作方式可根据项目进行自由选择\n◼项目方案量身定制",
-          "image": "/uploads/pages/zh/page2/cards/sectionGroups/1/cards/0/image.jpg",
           "imageFocus": "center center",
           "order": 1,
           "published": true
@@ -56,7 +55,6 @@
         {
           "title": "设备自由选择",
           "summary": "◼可自行选择供应商\n◼我方可推荐供应商\n◼设备维护运营可选择",
-          "image": "/uploads/pages/zh/page2/cards/sectionGroups/1/cards/1/image.jpg",
           "imageFocus": "center center",
           "order": 2,
           "published": true
@@ -64,7 +62,6 @@
         {
           "title": "条件自由选择",
           "summary": "◼设备产权持有可选择\n◼合作期限可选择\n◼合作资源协同",
-          "image": "/uploads/pages/zh/page2/cards/sectionGroups/1/cards/2/image.jpg",
           "imageFocus": "center center",
           "order": 3,
           "published": true
