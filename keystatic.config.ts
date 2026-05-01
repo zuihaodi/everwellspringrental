@@ -1,6 +1,6 @@
-import { collection, config, fields, singleton } from "@keystatic/core";
+import { config, fields, singleton } from "@keystatic/core";
 
-type PageKey = "about" | "products" | "solutions" | "finance" | "contact";
+type PageKey = "page1" | "page2" | "page3" | "page4" | "page5";
 type Lang = "zh" | "en";
 
 function readEnv(...keys: string[]) {
@@ -91,40 +91,49 @@ function focusPositionField(label: string) {
   });
 }
 
-const navZh = collection({
-  label: "ZH - Navigation (5 pages)",
-  slugField: "key",
-  path: "src/content/nav/zh/*",
+function navSlotField(label: string, defaultTitle: string, defaultHref: string, defaultOrder: number) {
+  return fields.object(
+    {
+      title: fields.text({ label: "Title", defaultValue: defaultTitle }),
+      href: fields.text({
+        label: "Public URL",
+        defaultValue: defaultHref,
+        description: "Public path used by the navigation link. Keep the language prefix, for example /zh/business or /en/business.",
+      }),
+      order: fields.integer({
+        label: "Navigation Order",
+        defaultValue: defaultOrder,
+        description: "Controls menu position only. It does not move page content. Use unique numbers 1-5.",
+      }),
+      published: fields.checkbox({ label: "Published", defaultValue: true }),
+    },
+    { label },
+  );
+}
+
+const navZh = singleton({
+  label: "ZH - Navigation (5 fixed pages)",
+  path: "src/content/nav/zh",
   format: { data: "json" },
   schema: {
-    key: fields.text({
-      label: "Key (fixed semantic slot)",
-      description:
-        "Recommended: 01-about. Semantic slot should map to about/products/solutions/finance/contact.",
-    }),
-    title: fields.text({ label: "Title" }),
-    href: fields.text({ label: "Href" }),
-    order: fields.integer({ label: "Order", defaultValue: 1 }),
-    published: fields.checkbox({ label: "Published", defaultValue: true }),
+    page1: navSlotField("Page 1 Content Slot", "关于我们", "/zh/about", 1),
+    page2: navSlotField("Page 2 Content Slot", "产品与服务", "/zh/business", 2),
+    page3: navSlotField("Page 3 Content Slot", "支持与保障", "/zh/solutions", 3),
+    page4: navSlotField("Page 4 Content Slot", "融资解决方案", "/zh/finance", 4),
+    page5: navSlotField("Page 5 Content Slot", "联系方式", "/zh/contact", 5),
   },
 });
 
-const navEn = collection({
-  label: "EN - Navigation (5 pages)",
-  slugField: "key",
-  path: "src/content/nav/en/*",
+const navEn = singleton({
+  label: "EN - Navigation (5 fixed pages)",
+  path: "src/content/nav/en",
   format: { data: "json" },
   schema: {
-    key: fields.text({
-      label: "Key (fixed semantic slot)",
-      description:
-        "Recommended: 01-about. Semantic slot should map to about/products/solutions/finance/contact.",
-    }),
-    title: fields.text({ label: "Title" }),
-    href: fields.text({ label: "Href" }),
-    order: fields.integer({ label: "Order", defaultValue: 1 }),
-    published: fields.checkbox({ label: "Published", defaultValue: true }),
-    translation: translationMetaField(),
+    page1: navSlotField("Page 1 Content Slot", "About Us", "/en/about", 1),
+    page2: navSlotField("Page 2 Content Slot", "Products & Services", "/en/business", 2),
+    page3: navSlotField("Page 3 Content Slot", "Support & Assurance", "/en/solutions", 3),
+    page4: navSlotField("Page 4 Content Slot", "Financing Solutions", "/en/finance", 4),
+    page5: navSlotField("Page 5 Content Slot", "Contact Us", "/en/contact", 5),
   },
 });
 
@@ -139,7 +148,7 @@ const homeZh = singleton({
         titleLine2: fields.text({ label: "\u4e3b\u6807\u9898\u7b2c\u4e8c\u884c" }),
         subtitle: fields.text({ label: "\u9996\u5c4f\u526f\u6807\u9898", multiline: true }),
         buttonPrimaryText: fields.text({ label: "\u4e3b\u6309\u94ae\u6587\u6848" }),
-        buttonPrimaryHref: fields.text({ label: "\u4e3b\u6309\u94ae\u94fe\u63a5", defaultValue: "/zh/products" }),
+        buttonPrimaryHref: fields.text({ label: "\u4e3b\u6309\u94ae\u94fe\u63a5", defaultValue: "/zh/business" }),
         buttonSecondaryText: fields.text({ label: "\u6b21\u6309\u94ae\u6587\u6848" }),
         buttonSecondaryHref: fields.text({ label: "\u6b21\u6309\u94ae\u94fe\u63a5", defaultValue: "/zh/contact" }),
         bgImage: fields.image({
@@ -295,7 +304,7 @@ const homeEn = singleton({
         titleLine2: fields.text({ label: "Hero Title Line 2" }),
         subtitle: fields.text({ label: "Hero Subtitle", multiline: true }),
         buttonPrimaryText: fields.text({ label: "Primary Button Text" }),
-        buttonPrimaryHref: fields.text({ label: "Primary Button Href", defaultValue: "/en/products" }),
+        buttonPrimaryHref: fields.text({ label: "Primary Button Href", defaultValue: "/en/business" }),
         buttonSecondaryText: fields.text({ label: "Secondary Button Text" }),
         buttonSecondaryHref: fields.text({ label: "Secondary Button Href", defaultValue: "/en/contact" }),
         bgImage: fields.image({
@@ -423,10 +432,6 @@ function pageSchema(lang: Lang, page: PageKey) {
         sectionPrimaryButtonHref: fields.text({ label: l("主按钮链接", "Primary Button Href"), defaultValue: "" }),
         sectionSecondaryButtonText: fields.text({ label: l("次按钮文案", "Secondary Button Text"), defaultValue: "" }),
         sectionSecondaryButtonHref: fields.text({ label: l("次按钮链接", "Secondary Button Href"), defaultValue: "" }),
-        legacyImage: fields.text({
-          label: l("旧版图片路径（可选）", "Legacy Image Path (Optional)"),
-          defaultValue: "",
-        }),
         image: fields.image({
           label: l("主图上传", "Main Image Upload"),
           description: l("建议 1200x700，比例 12:7。", "Recommended 1200x700, ratio 12:7."),
@@ -536,23 +541,21 @@ function pageSchema(lang: Lang, page: PageKey) {
 
 export default config({
   storage: keystaticStorage,
-  collections: {
+  singletons: {
     navZh,
     navEn,
-  },
-  singletons: {
     siteSettings,
     homeZh,
     homeEn,
-    aboutZh: singleton({ label: "ZH - 关于我们", path: "src/content/pages/zh/about", format: { data: "json" }, schema: pageSchema("zh", "about") }),
-    productsPageZh: singleton({ label: "ZH - 产品与服务", path: "src/content/pages/zh/products", format: { data: "json" }, schema: pageSchema("zh", "products") }),
-    financePageZh: singleton({ label: "ZH - 融资", path: "src/content/pages/zh/finance", format: { data: "json" }, schema: pageSchema("zh", "finance") }),
-    solutionsZh: singleton({ label: "ZH - 解决方案", path: "src/content/pages/zh/solutions", format: { data: "json" }, schema: pageSchema("zh", "solutions") }),
-    contactZh: singleton({ label: "ZH - 联系我们", path: "src/content/pages/zh/contact", format: { data: "json" }, schema: pageSchema("zh", "contact") }),
-    aboutEn: singleton({ label: "EN - About", path: "src/content/pages/en/about", format: { data: "json" }, schema: pageSchema("en", "about") }),
-    productsPageEn: singleton({ label: "EN - Products", path: "src/content/pages/en/products", format: { data: "json" }, schema: pageSchema("en", "products") }),
-    financePageEn: singleton({ label: "EN - Finance", path: "src/content/pages/en/finance", format: { data: "json" }, schema: pageSchema("en", "finance") }),
-    solutionsEn: singleton({ label: "EN - Solutions", path: "src/content/pages/en/solutions", format: { data: "json" }, schema: pageSchema("en", "solutions") }),
-    contactEn: singleton({ label: "EN - Contact", path: "src/content/pages/en/contact", format: { data: "json" }, schema: pageSchema("en", "contact") }),
+    page1Zh: singleton({ label: "ZH - Page 1", path: "src/content/pages/zh/page1", format: { data: "json" }, schema: pageSchema("zh", "page1") }),
+    page2Zh: singleton({ label: "ZH - Page 2", path: "src/content/pages/zh/page2", format: { data: "json" }, schema: pageSchema("zh", "page2") }),
+    page3Zh: singleton({ label: "ZH - Page 3", path: "src/content/pages/zh/page3", format: { data: "json" }, schema: pageSchema("zh", "page3") }),
+    page4Zh: singleton({ label: "ZH - Page 4", path: "src/content/pages/zh/page4", format: { data: "json" }, schema: pageSchema("zh", "page4") }),
+    page5Zh: singleton({ label: "ZH - Page 5", path: "src/content/pages/zh/page5", format: { data: "json" }, schema: pageSchema("zh", "page5") }),
+    page1En: singleton({ label: "EN - Page 1", path: "src/content/pages/en/page1", format: { data: "json" }, schema: pageSchema("en", "page1") }),
+    page2En: singleton({ label: "EN - Page 2", path: "src/content/pages/en/page2", format: { data: "json" }, schema: pageSchema("en", "page2") }),
+    page3En: singleton({ label: "EN - Page 3", path: "src/content/pages/en/page3", format: { data: "json" }, schema: pageSchema("en", "page3") }),
+    page4En: singleton({ label: "EN - Page 4", path: "src/content/pages/en/page4", format: { data: "json" }, schema: pageSchema("en", "page4") }),
+    page5En: singleton({ label: "EN - Page 5", path: "src/content/pages/en/page5", format: { data: "json" }, schema: pageSchema("en", "page5") }),
   },
 });

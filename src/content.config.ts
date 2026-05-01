@@ -5,27 +5,12 @@ const nav = defineCollection({
   schema: z.record(z.any()),
 });
 
-const finance = defineCollection({
-  type: "data",
-  schema: z.record(z.any()),
-});
-
 const home = defineCollection({
   type: "data",
   schema: z.record(z.any()),
 });
 
-const products = defineCollection({
-  type: "data",
-  schema: z.record(z.any()),
-});
-
 const pages = defineCollection({
-  type: "data",
-  schema: z.record(z.any()),
-});
-
-const cards = defineCollection({
   type: "data",
   schema: z.record(z.any()),
 });
@@ -37,10 +22,7 @@ const site = defineCollection({
 
 export const collections = {
   nav,
-  finance,
   home,
-  products,
   pages,
-  cards,
   site,
 };

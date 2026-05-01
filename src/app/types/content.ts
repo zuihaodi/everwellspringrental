@@ -55,8 +55,20 @@ export interface CmsProductItem {
   published?: boolean;
 }
 
+export type CmsPageKey =
+  | "page1"
+  | "page2"
+  | "page3"
+  | "page4"
+  | "page5"
+  | "about"
+  | "products"
+  | "finance"
+  | "solutions"
+  | "contact";
+
 export interface CmsCardItem {
-  pageKey?: "home" | "about" | "products" | "finance" | "solutions" | "contact";
+  pageKey?: "home" | CmsPageKey;
   key?: string;
   title?: string;
   summary?: string;
@@ -160,7 +172,6 @@ export interface CmsSimplePageConfig {
   sectionTitle?: string;
   sectionBody?: string;
   image?: string;
-  legacyImage?: string;
   heroShow?: boolean;
   mainShow?: boolean;
   cardsShow?: boolean;
@@ -195,7 +206,6 @@ export interface CmsSimplePageConfig {
     sectionPrimaryButtonHref?: string;
     sectionSecondaryButtonText?: string;
     sectionSecondaryButtonHref?: string;
-    legacyImage?: string;
     image?: string;
     imageFocus?: string;
   }>;

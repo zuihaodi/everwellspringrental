@@ -1,16 +1,18 @@
 ﻿import type {
   CmsCardItem,
-  CmsFinanceItem,
   CmsBottomListItem,
   CmsContactInfo,
   CmsHomeConfig,
   CmsMetricItem,
   CmsNavItem,
-  CmsProductItem,
   CmsSimplePageConfig,
 } from "../types/content";
 
 type SortablePublished = { order?: number; published?: boolean };
+type Lang = "zh" | "en";
+type PageSlot = "page1" | "page2" | "page3" | "page4" | "page5";
+type SimplePageKey = PageSlot;
+type CmsNavConfig = Partial<Record<PageSlot, Omit<CmsNavItem, "key">>>;
 
 type JsonValue = Record<string, unknown> | unknown[] | string | number | boolean | null;
 
@@ -18,11 +20,6 @@ const contentJsonModules = import.meta.glob<JsonValue>("/src/content/**/*.json",
   eager: true,
   import: "default",
 });
-
-const publicWebpModules = import.meta.glob("/public/**/*.webp", { eager: true });
-const publicWebpSet = new Set(
-  Object.keys(publicWebpModules).map((k) => k.replace(/^\/public/, "")),
-);
 
 function normalizeModulePath(input: string) {
   const normalized = input.replace(/\\/g, "/").replace(/\/+/g, "/");
@@ -32,47 +29,6 @@ function normalizeModulePath(input: string) {
 function cloneJson<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T;
 }
-const KEY_ALIASES: Record<string, string> = {
-  "关于我们": "about",
-  "产品与服务": "products",
-  "技术解决方案": "solutions",
-  "解决方案": "solutions",
-  "支持体系": "solutions",
-  "融资解决方案": "finance",
-  "联系方式": "contact",
-  "about us": "about",
-  "products & services": "products",
-  "technical solutions": "solutions",
-  "financing solutions": "finance",
-  contact: "contact",
-};
-
-function readJsonDir<T>(dir: string): T[] {
-  const prefix = normalizeModulePath(dir).replace(/\/$/, "");
-  const files = Object.keys(contentJsonModules)
-    .filter((filePath) => {
-      if (!filePath.startsWith(`${prefix}/`) || !filePath.endsWith(".json")) return false;
-      const remainder = filePath.slice(prefix.length + 1);
-      return !remainder.includes("/");
-    })
-    .sort((a, b) => a.localeCompare(b, "en"));
-  const list: T[] = [];
-
-  for (const filePath of files) {
-    try {
-      const raw = contentJsonModules[filePath];
-      if (raw === undefined) continue;
-      const parsed = cloneJson(raw) as T;
-      const maybeObj = parsed as unknown as Record<string, unknown>;
-      if (maybeObj && typeof maybeObj === "object" && !Array.isArray(maybeObj) && !("key" in maybeObj)) {
-        maybeObj.key = filePath.split("/").pop()?.replace(/\.json$/i, "") || "";
-      }
-      list.push(parsed);
-    } catch {}
-  }
-  return list;
-}
-
 function readJsonFile<T>(filePath: string): T | null {
   const normalized = normalizeModulePath(filePath);
   const raw = contentJsonModules[normalized];
@@ -91,13 +47,6 @@ function normalizeSort<T extends SortablePublished>(items: T[]) {
 }
 
 function resolveOptimizedImage(assetPath?: string, prefer: "main" | "small" = "main"): string | undefined {
-  if (!assetPath || !assetPath.startsWith("/")) return assetPath;
-  const noExt = assetPath.replace(/\.[^/.]+$/, "");
-  const webp = `${noExt}.webp`;
-  const webpSmall = `${noExt}.sm.webp`;
-
-  if (prefer === "small" && publicWebpSet.has(webpSmall)) return webpSmall;
-  if (publicWebpSet.has(webp)) return webp;
   return assetPath;
 }
 
@@ -183,7 +132,7 @@ function normalizeInlineCards(list?: CmsCardItem[]) {
     .filter((item) => item?.published !== false && (hasText(item?.title) || hasText(item?.summary)))
     .map((item) => ({
       ...item,
-      image: resolveOptimizedImage(item.image, "small"),
+      image: item.image,
       imageFocus: normalizeFocus(item.imageFocus),
     }));
 }
@@ -234,103 +183,59 @@ function mergeLocalizedCards(zhList?: CmsCardItem[], enList?: CmsCardItem[]) {
 function normalizeKey(key?: string) {
   if (!hasText(key)) return "";
   const clean = key.replace(/^\d+[-_]?/, "").trim();
-  const lower = clean.toLowerCase();
-  return KEY_ALIASES[clean] || KEY_ALIASES[lower] || clean;
+  return clean;
 }
 
-function mergeByKey<T extends { key?: string }>(
-  zhItems: T[],
-  enItems: T[],
-  merge: (zhItem: T, enItem?: T) => T,
-): T[] {
-  const enMap = new Map<string, T>();
-  for (const item of enItems) {
-    const k = normalizeKey(item.key);
-    if (k) enMap.set(k, item);
+function isPageSlot(value: string): value is PageSlot {
+  return value === "page1" || value === "page2" || value === "page3" || value === "page4" || value === "page5";
+}
+
+function normalizePageKey(page: SimplePageKey): PageSlot {
+  const normalized = normalizeKey(page);
+  return isPageSlot(normalized) ? normalized : "page1";
+}
+
+function readSimplePageConfig(lang: Lang, slot: PageSlot) {
+  return readJsonFile<CmsSimplePageConfig>(`src/content/pages/${lang}/${slot}.json`);
+}
+
+function isSafeLangHref(href: unknown, lang: Lang) {
+  if (!hasText(href)) return false;
+  const base = lang === "zh" ? "/zh/" : "/en/";
+  return href === `/${lang}` || href.startsWith(base);
+}
+
+export function resolvePageSlotByHref(lang: Lang, pathname: string): PageSlot | null {
+  const cleanPath = pathname.replace(/\/+$/, "") || `/${lang}`;
+  const navItems = loadNavByLang(lang);
+  for (const item of navItems) {
+    const slot = normalizeKey(item.key);
+    if (!isPageSlot(slot)) continue;
+    const configuredHref = isSafeLangHref(item.href, lang) ? item.href!.replace(/\/+$/, "") : "";
+    if (configuredHref && configuredHref === cleanPath) return slot;
   }
 
-  const used = new Set<string>();
-  const merged = zhItems.map((zhItem) => {
-    const k = normalizeKey(zhItem.key);
-    const enItem = k ? enMap.get(k) : undefined;
-    if (k) used.add(k);
-    return merge(zhItem, enItem);
-  });
-
-  for (const enItem of enItems) {
-    const k = normalizeKey(enItem.key);
-    if (!k || used.has(k)) continue;
-    merged.push(enItem);
-  }
-  return merged;
+  return null;
 }
 
 export function loadNavByLang(lang: "zh" | "en"): CmsNavItem[] {
-  if (lang === "zh") {
-    const items = readJsonDir<CmsNavItem>("src/content/nav/zh");
-    return normalizeSort(items);
-  }
-  const zhItems = normalizeSort(readJsonDir<CmsNavItem>("src/content/nav/zh"));
-  const enItems = normalizeSort(readJsonDir<CmsNavItem>("src/content/nav/en"));
-  const merged = mergeByKey(zhItems, enItems, (zhItem, enItem) => ({
-    ...zhItem,
-    ...enItem,
-    title: hasText(enItem?.title) ? enItem?.title : zhItem.title,
-    href: hasText(enItem?.href) ? enItem?.href : zhItem.href,
-    order: typeof enItem?.order === "number" ? enItem.order : zhItem.order,
-    published: enItem?.published ?? zhItem.published,
-  }));
-  return normalizeSort(merged);
-}
-
-export function loadFinanceByLang(lang: "zh" | "en"): CmsFinanceItem[] {
-  let items: CmsFinanceItem[];
-  if (lang === "zh") {
-    items = readJsonDir<CmsFinanceItem>("src/content/finance/zh");
-  } else {
-    const zhItems = normalizeSort(readJsonDir<CmsFinanceItem>("src/content/finance/zh"));
-    const enItems = normalizeSort(readJsonDir<CmsFinanceItem>("src/content/finance/en"));
-    items = mergeByKey(zhItems, enItems, (zhItem, enItem) => ({
-      ...zhItem,
-      ...enItem,
-      title: hasText(enItem?.title) ? enItem?.title : zhItem.title,
-      summary: hasText(enItem?.summary) ? enItem?.summary : zhItem.summary,
-      image: hasText(enItem?.image) ? enItem?.image : zhItem.image,
-      order: typeof enItem?.order === "number" ? enItem.order : zhItem.order,
-      published: enItem?.published ?? zhItem.published,
-    }));
-  }
-  return normalizeSort(items).map((item) => ({
-    ...item,
-    image: resolveOptimizedImage(item.image, "small"),
-    imageFocus: normalizeFocus(item.imageFocus),
-  }));
-}
-
-export function loadProductsByLang(lang: "zh" | "en"): CmsProductItem[] {
-  let items: CmsProductItem[];
-  if (lang === "zh") {
-    items = readJsonDir<CmsProductItem>("src/content/products/zh");
-  } else {
-    const zhItems = normalizeSort(readJsonDir<CmsProductItem>("src/content/products/zh"));
-    const enItems = normalizeSort(readJsonDir<CmsProductItem>("src/content/products/en"));
-    items = mergeByKey(zhItems, enItems, (zhItem, enItem) => ({
-      ...zhItem,
-      ...enItem,
-      category: hasText(enItem?.category) ? enItem?.category : zhItem.category,
-      title: hasText(enItem?.title) ? enItem?.title : zhItem.title,
-      summary: hasText(enItem?.summary) ? enItem?.summary : zhItem.summary,
-      cover: hasText(enItem?.cover) ? enItem?.cover : zhItem.cover,
-      ctaHref: hasText(enItem?.ctaHref) ? enItem?.ctaHref : zhItem.ctaHref,
-      order: typeof enItem?.order === "number" ? enItem.order : zhItem.order,
-      published: enItem?.published ?? zhItem.published,
-    }));
-  }
-  return normalizeSort(items).map((item) => ({
-    ...item,
-    cover: resolveOptimizedImage(item.cover, "small"),
-    coverFocus: normalizeFocus(item.coverFocus),
-  }));
+  const cfg = readJsonFile<CmsNavConfig>(`src/content/nav/${lang}.json`);
+  if (!cfg) return [];
+  const usedHrefs = new Set<string>();
+  const items = (["page1", "page2", "page3", "page4", "page5"] as PageSlot[]).map((key, index) => {
+    const rawHref = cfg[key]?.href;
+    const normalizedHref = isSafeLangHref(rawHref, lang) ? rawHref!.replace(/\/+$/, "") || `/${lang}` : "";
+    const href = normalizedHref && !usedHrefs.has(normalizedHref) ? normalizedHref : "";
+    if (href) usedHrefs.add(href);
+    return {
+      key,
+      ...cfg[key],
+      href,
+      order: typeof cfg[key]?.order === "number" ? cfg[key]?.order : index + 1,
+      published: cfg[key]?.published ?? true,
+    };
+  });
+  return normalizeSort(items);
 }
 
 export function loadHomeByLang(lang: "zh" | "en"): CmsHomeConfig | null {
@@ -420,10 +325,10 @@ export function loadHomeByLang(lang: "zh" | "en"): CmsHomeConfig | null {
   };
 }
 
-function getSimplePageDefaults(page: "about" | "products" | "solutions" | "finance" | "contact", lang: "zh" | "en"): CmsSimplePageConfig {
+function getSimplePageDefaults(page: SimplePageKey, lang: Lang): CmsSimplePageConfig {
   const isZh = lang === "zh";
-  const defaults: Record<string, CmsSimplePageConfig> = {
-    about: {
+  const defaults: Record<PageSlot, CmsSimplePageConfig> = {
+    page1: {
       heroTitle: isZh ? "关于我们" : "About Us",
       heroSubtitle: isZh ? "源于 2002，深耕能源领域二十余年。" : "Rooted in energy projects since 2002.",
       sectionTitle: isZh ? "公司概况" : "Company Overview",
@@ -434,7 +339,7 @@ function getSimplePageDefaults(page: "about" | "products" | "solutions" | "finan
       bottomTitle: isZh ? "资质与认证" : "Qualifications & Certifications",
       bottomSubtitle: isZh ? "标准化体系保障交付质量" : "Standardized systems ensure delivery quality",
     },
-    products: {
+    page2: {
       heroTitle: isZh ? "产品与服务" : "Products & Services",
       heroSubtitle: isZh ? "钻采装备销售租赁 | 动力总包 | 全球工程服务" : "Rig sales & rental | Power package | Global engineering",
       sectionTitle: isZh ? "主要产品与服务" : "Main Offerings",
@@ -445,7 +350,7 @@ function getSimplePageDefaults(page: "about" | "products" | "solutions" | "finan
       bottomTitle: isZh ? "服务保障" : "Service Assurance",
       bottomSubtitle: isZh ? "从方案到交付全流程支持" : "End-to-end support from proposal to delivery",
     },
-    solutions: {
+    page3: {
       heroTitle: isZh ? "支持与保障" : "Support System",
       heroSubtitle: isZh ? "全方位工程技术与支持体系" : "Comprehensive engineering and support services",
       sectionTitle: isZh ? "支持体系简介" : "Support Overview",
@@ -456,7 +361,7 @@ function getSimplePageDefaults(page: "about" | "products" | "solutions" | "finan
       bottomTitle: isZh ? "资质与认证" : "Qualifications & Certifications",
       bottomSubtitle: isZh ? "标准化与体系化并重" : "Balanced standardization and system management",
     },
-    finance: {
+    page4: {
       heroTitle: isZh ? "融资解决方案" : "Financing Solutions",
       heroSubtitle: isZh ? "围绕设备与项目周期的资金配置服务" : "Funding structures for equipment and project cycles",
       sectionTitle: isZh ? "融资能力简介" : "Financing Overview",
@@ -467,7 +372,7 @@ function getSimplePageDefaults(page: "about" | "products" | "solutions" | "finan
       bottomTitle: isZh ? "合作模式" : "Cooperation Models",
       bottomSubtitle: isZh ? "灵活组合，提升资金效率" : "Flexible combinations to improve capital efficiency",
     },
-    contact: {
+    page5: {
       heroTitle: isZh ? "联系方式" : "Contact",
       heroSubtitle: isZh ? "期待与您合作" : "We look forward to working with you",
       sectionTitle: isZh ? "联系方式" : "Get in Touch",
@@ -484,7 +389,7 @@ function getSimplePageDefaults(page: "about" | "products" | "solutions" | "finan
     },
   };
 
-  const base = defaults[page];
+  const base = defaults[normalizePageKey(page)];
   return {
     ...base,
     heroShow: true,
@@ -507,13 +412,14 @@ function getSimplePageDefaults(page: "about" | "products" | "solutions" | "finan
   };
 }
 
-export function loadSimplePageByLang(page: "about" | "products" | "solutions" | "finance" | "contact", lang: "zh" | "en"): CmsSimplePageConfig {
-  const defaults = getSimplePageDefaults(page, lang);
-  let cfg = readJsonFile<CmsSimplePageConfig>(`src/content/pages/${lang}/${page}.json`);
+export function loadSimplePageByLang(page: SimplePageKey, lang: Lang): CmsSimplePageConfig {
+  const slot = normalizePageKey(page);
+  const defaults = getSimplePageDefaults(slot, lang);
+  let cfg = readSimplePageConfig(lang, slot);
   let zhCfg: CmsSimplePageConfig | null = null;
   const enCfg = lang === "en" ? cfg : null;
   if (lang === "en") {
-    zhCfg = readJsonFile<CmsSimplePageConfig>(`src/content/pages/zh/${page}.json`);
+    zhCfg = readSimplePageConfig("zh", slot);
     if (zhCfg && cfg) {
       cfg = { ...zhCfg, ...cfg };
     } else if (!cfg && zhCfg) {
@@ -541,16 +447,8 @@ export function loadSimplePageByLang(page: "about" | "products" | "solutions" | 
   const enCards = sectionContent(enCfg?.cardsSection)?.cards;
 
   const finalImage = hasMainSection
-    ? resolveLocalizedImage(
-        lang === "en" ? textOr(enMainSectionValue?.image, enMainSectionValue?.legacyImage) : mainSectionValue?.image,
-        lang === "en"
-          ? textOr(zhMainSectionValue?.image, textOr(zhMainSectionValue?.legacyImage, textOr(zhCfg?.image, textOr(zhCfg?.legacyImage, defaults.image))))
-          : textOr(mainSectionValue?.legacyImage, ""),
-      )
-    : resolveLocalizedImage(
-        lang === "en" ? textOr(enCfg?.image, enCfg?.legacyImage) : cfg.image,
-        lang === "en" ? textOr(zhCfg?.image, textOr(zhCfg?.legacyImage, defaults.image)) : textOr(cfg.legacyImage, defaults.image),
-      );
+    ? resolveLocalizedImage(lang === "en" ? enMainSectionValue?.image : mainSectionValue?.image, lang === "en" ? zhMainSectionValue?.image : undefined)
+    : undefined;
   const finalBg = hasHeroSection
     ? resolveLocalizedImage(
         lang === "en" ? enHeroSectionValue?.heroBgImage : heroSectionValue?.heroBgImage,
@@ -602,7 +500,6 @@ export function loadSimplePageByLang(page: "about" | "products" | "solutions" | 
     metricsShow,
     image: finalImage,
     imageFocus: finalImageFocus,
-    legacyImage: textOr(mainSectionValue?.legacyImage, textOr(cfg.legacyImage, defaults.legacyImage)),
     heroBgImage: finalBg,
     heroBgFocus: finalBgFocus,
     metrics: normalizeMetrics(metricsSectionValue?.metrics, normalizeMetrics(cfg.metrics, defaults.metrics)),
@@ -626,48 +523,11 @@ export function loadSimplePageByLang(page: "about" | "products" | "solutions" | 
   };
 }
 
-function filterCardsByPage(items: CmsCardItem[], pageKey: CmsCardItem["pageKey"]) {
-  return items.filter((i) => i.pageKey === pageKey);
-}
-
 export function loadCardsByLangPage(
-  lang: "zh" | "en",
-  pageKey: "home" | "about" | "products" | "finance" | "solutions" | "contact",
+  lang: Lang,
+  pageKey: SimplePageKey,
 ): CmsCardItem[] {
-  if (pageKey === "home") {
-    const homeCfg = loadHomeByLang(lang);
-    const inlineCards = normalizeInlineCards(homeCfg?.cardsSection?.cards);
-    if (inlineCards.length > 0) return inlineCards;
-  } else {
-    const pageCfg = loadSimplePageByLang(pageKey, lang);
-    const inlineCards = normalizeInlineCards(pageCfg.cardsSection?.cards);
-    if (inlineCards.length > 0) return inlineCards;
-  }
-
-  let items: CmsCardItem[];
-  if (lang === "zh") {
-    items = filterCardsByPage(readJsonDir<CmsCardItem>("src/content/cards/zh"), pageKey);
-  } else {
-    const zhItems = filterCardsByPage(normalizeSort(readJsonDir<CmsCardItem>("src/content/cards/zh")), pageKey);
-    const enItems = filterCardsByPage(normalizeSort(readJsonDir<CmsCardItem>("src/content/cards/en")), pageKey);
-    items = mergeByKey(zhItems, enItems, (zhItem, enItem) => ({
-      ...zhItem,
-      ...enItem,
-      pageKey,
-      title: hasText(enItem?.title) ? enItem?.title : zhItem.title,
-      summary: hasText(enItem?.summary) ? enItem?.summary : zhItem.summary,
-      image: hasText(enItem?.image) ? enItem?.image : zhItem.image,
-      ctaText: hasText(enItem?.ctaText) ? enItem?.ctaText : zhItem.ctaText,
-      ctaHref: hasText(enItem?.ctaHref) ? enItem?.ctaHref : zhItem.ctaHref,
-      order: typeof enItem?.order === "number" ? enItem.order : zhItem.order,
-      published: enItem?.published ?? zhItem.published,
-    }));
-  }
-
-  return normalizeSort(items).map((item) => ({
-    ...item,
-    image: resolveOptimizedImage(item.image, "small"),
-    imageFocus: normalizeFocus(item.imageFocus),
-  }));
+  const pageCfg = loadSimplePageByLang(pageKey, lang);
+  return normalizeInlineCards(pageCfg.cardsSection?.cards);
 }
 

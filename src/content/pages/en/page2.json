@@ -1,0 +1,36 @@
+{
+  "heroSection": {
+    "show": true,
+    "heroTitle": "Our Business",
+    "heroBgFocus": "center center"
+  },
+  "mainSection": {
+    "show": true,
+    "imageFocus": "center center"
+  },
+  "metricsSection": {
+    "show": false,
+    "metrics": []
+  },
+  "middleSection": {
+    "show": true
+  },
+  "cardsSection": {
+    "show": true,
+    "cards": []
+  },
+  "bottomSection": {
+    "show": true
+  },
+  "bottomListSection": {
+    "show": true,
+    "bottomList": []
+  },
+  "contactSection": {
+    "show": false
+  },
+  "translation": {
+    "mode": "auto",
+    "status": "synced"
+  }
+}

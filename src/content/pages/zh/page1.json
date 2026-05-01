@@ -1,0 +1,38 @@
+{
+  "heroSection": {
+    "show": true,
+    "heroTitle": "关于我们",
+    "heroSubtitle": "源于 2002，深耕能源行业二十余载",
+    "heroBgFocus": "center center"
+  },
+  "mainSection": {
+    "show": true,
+    "sectionTitle": "关于我们",
+    "sectionBody": "EVER WELLSPRING RENTAL PTE. LTD.拥有三十年以上发展历史，是专注于油气装备租赁的大型跨国公司，业务覆盖油田服务装备、炼化设备、海洋工程装备以及净化处理装置等领域。",
+    "image": "/uploads/pages/zh/page1/mainSection/image.jpg",
+    "imageFocus": "right center"
+  },
+  "metricsSection": {
+    "show": false,
+    "metrics": []
+  },
+  "middleSection": {
+    "show": false,
+    "middleTitle": "核心优势",
+    "middleSubtitle": "面向全球客户的长期协作能力"
+  },
+  "cardsSection": {
+    "show": true,
+    "cards": []
+  },
+  "bottomSection": {
+    "show": false
+  },
+  "bottomListSection": {
+    "show": false,
+    "bottomList": []
+  },
+  "contactSection": {
+    "show": false
+  }
+}

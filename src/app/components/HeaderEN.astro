@@ -1,18 +1,11 @@
 ﻿---
 import { getNavEn } from "../i18n/nav";
+import { loadNavByLang, resolvePageSlotByHref } from "../lib/content-loader";
 import { getLanguagePolicy, getSiteSettings } from "../lib/site-settings";
 const navEn = getNavEn();
+const navZhSlots = loadNavByLang("zh");
 const site = getSiteSettings();
 const languagePolicy = getLanguagePolicy(site);
-const zhPagePaths = new Set([
-  "/zh",
-  "/zh/about",
-  "/zh/products",
-  "/zh/solutions",
-  "/zh/finance",
-  "/zh/contact",
-  "/zh/finance-solutions",
-]);
 
 const normalizePath = (path: string) => {
   if (!path) return "/en";
@@ -20,9 +13,9 @@ const normalizePath = (path: string) => {
 };
 
 const currentPath = normalizePath(Astro.url.pathname);
-const mappedZhPath =
-  currentPath === "/en" ? "/zh" : currentPath.startsWith("/en/") ? `/zh${currentPath.slice(3)}` : "/zh";
-const switchHref = zhPagePaths.has(mappedZhPath) ? mappedZhPath : "/zh/";
+const currentSlot = resolvePageSlotByHref("en", currentPath);
+const switchHref =
+  (currentSlot && navZhSlots.find((item) => item.key === currentSlot)?.href) || "/zh/";
 const brandHref = languagePolicy.hasEn ? "/en/" : languagePolicy.rootHref;
 ---
 <header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">

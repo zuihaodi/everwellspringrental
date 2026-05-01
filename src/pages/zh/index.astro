@@ -2,8 +2,8 @@
 import Layout from "../../app/layouts/Layout.astro";
 import Header from "../../app/components/Header.astro";
 import { siteConfig } from "../../app/config/site";
-import { loadCardsByLangPage, loadHomeByLang, loadProductsByLang } from "../../app/lib/content-loader";
-import type { CmsCardItem, CmsHomeConfig, CmsProductItem } from "../../app/types/content";
+import { loadHomeByLang } from "../../app/lib/content-loader";
+import type { CmsCardItem, CmsHomeConfig } from "../../app/types/content";
 
 const fallbackHome: CmsHomeConfig = {
   hero: {
@@ -39,39 +39,8 @@ const fallbackHome: CmsHomeConfig = {
 const homeConfig = loadHomeByLang("zh") || fallbackHome;
 const metrics = homeConfig.metrics?.length ? homeConfig.metrics : fallbackHome.metrics;
 
-const productFallback: CmsProductItem[] = [
-  {
-    category: "Rental",
-    title: "High-end Rig Rental (ZJ90DB)",
-    summary: "High-end rig leasing for deep drilling scenarios.",
-    cover: "/images/card1.jpg",
-    ctaHref: "/zh/contact",
-    order: 1,
-    published: true,
-  },
-  {
-    category: "Sales",
-    title: "Oilfield Special Chassis",
-    summary: "8x6 fracturing and mixed-operation chassis solutions.",
-    cover: "/images/card2.jpg",
-    ctaHref: "/zh/contact",
-    order: 2,
-    published: true,
-  },
-  {
-    category: "Service",
-    title: "Power Packaging Service",
-    summary: "One-stop power package solutions for drilling operations.",
-    cover: "/images/card3.jpg",
-    ctaHref: "/zh/contact",
-    order: 3,
-    published: true,
-  },
-];
-
-const cmsProducts = loadProductsByLang("zh").filter((p) => p.title && p.summary && p.cover);
 const cardsEnabled = homeConfig.cardsSection?.show !== false;
-const cards = cardsEnabled ? loadCardsByLangPage("zh", "home").filter((c) => c.title && c.summary) : [];
+const cards = cardsEnabled ? homeConfig.cardsSection?.cards?.filter((c) => c.title) || [] : [];
 const bottomListEnabled = homeConfig.bottomListSection?.show !== false;
 const bottomList = homeConfig.bottomListSection?.bottomList || homeConfig.bottomList || [];
 const bottomTitle = homeConfig.bottomSection?.bottomTitle || homeConfig.bottomTitle || "底部列表区域";
@@ -79,26 +48,15 @@ const bottomSubtitle = homeConfig.bottomSection?.bottomSubtitle || homeConfig.bo
 const bottomCols = Math.min(8, Math.max(bottomList.length, 1));
 const toMainImage = (src?: string) => (src ? src.replace(/\.sm\.webp$/i, ".webp") : "");
 const focusPos = (value?: string) => value || "center center";
-const topProducts = (
-  cards.length
-    ? cards.map((c: CmsCardItem) => ({
-        title: c.title || "",
-        summary: c.summary || "",
-        cover: c.image || "/images/card1.jpg",
-        fullCover: toMainImage(c.image) || c.image || "/images/card1.jpg",
-        coverFocus: c.imageFocus || "center center",
-        ctaText: c.ctaText || "了解更多",
-        ctaHref: c.ctaHref || "/zh/contact",
-      }))
-    : cmsProducts.length
-      ? cmsProducts.map((p) => ({
-          ...p,
-          fullCover: toMainImage(p.cover) || p.cover || "/images/card1.jpg",
-          coverFocus: p.coverFocus || "center center",
-          ctaText: "了解更多",
-        }))
-      : productFallback.map((p) => ({ ...p, fullCover: p.cover, coverFocus: "center center" }))
-);
+const topProducts = cards.map((c: CmsCardItem) => ({
+  title: c.title || "",
+  summary: c.summary || "",
+  cover: c.image || "/images/card1.jpg",
+  fullCover: toMainImage(c.image) || c.image || "/images/card1.jpg",
+  coverFocus: c.imageFocus || "center center",
+  ctaText: c.ctaText || "了解更多",
+  ctaHref: c.ctaHref || "/zh/contact",
+}));
 ---
 
 <Layout title={`${siteConfig.shortBrand} - Energy Equipment Service`} lang="zh-CN">
@@ -142,7 +100,7 @@ const topProducts = (
             <p class="mt-4 text-gray-600 max-w-2xl mx-auto">{homeConfig.businessSection?.desc || ""}</p>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+          <div class="grid gap-8 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
             {topProducts.map((item) => (
               <div class="group bg-white shadow-xl rounded overflow-hidden hover:-translate-y-2 transition duration-300">
                 <div class="h-56 overflow-hidden">
@@ -158,7 +116,7 @@ const topProducts = (
                 </div>
                 <div class="p-8">
                   <h3 class="text-2xl font-bold mb-3 text-[#003865]">{item.title}</h3>
-                  <p class="text-gray-600 mb-6 leading-relaxed">{item.summary}</p>
+                  {item.summary && <p class="text-gray-600 mb-6 leading-relaxed">{item.summary}</p>}
                   <a href={item.ctaHref || "/zh/contact"} class="text-[#E63E00] font-bold uppercase tracking-wide hover:underline">{item.ctaText || "了解更多"} &rarr;</a>
                 </div>
               </div>

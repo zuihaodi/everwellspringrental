@@ -1,0 +1,68 @@
+{
+  "heroSection": {
+    "show": true,
+    "heroTitle": "业务模式",
+    "heroSubtitle": "以“设备租赁 + 融资合作 + 维保服务”为主线，为国际石油公司、国际油田服务公司及大型工程项目提供设备资产配置方案。",
+    "heroBgFocus": "center center"
+  },
+  "mainSection": {
+    "show": false,
+    "imageFocus": "center center"
+  },
+  "metricsSection": {
+    "show": false,
+    "metrics": []
+  },
+  "middleSection": {
+    "show": true,
+    "middleTitle": "核心板块",
+    "middleSubtitle": "EVER WELLSPRING RENTAL PTE. LTD.业务覆盖油田服务装备、炼化设备、海洋工程装备以及净化处理装置等领域。"
+  },
+  "cardsSection": {
+    "show": true,
+    "cards": [
+      {
+        "title": "石油服务装备",
+        "summary": "油气钻机\n压裂车\n修井机",
+        "image": "/uploads/pages/zh/page2/cards/cardsSection/cards/0/image.jpg",
+        "imageFocus": "center center",
+        "order": 1,
+        "published": true
+      },
+      {
+        "title": "油田设备",
+        "summary": "净化处理装置\n油水分离器\n注水注汽设备",
+        "image": "/uploads/pages/zh/page2/cards/cardsSection/cards/1/image.jpg",
+        "imageFocus": "center center",
+        "order": 2,
+        "published": true
+      },
+      {
+        "title": "炼化设备",
+        "summary": "大型离心压缩机\n烟气轮机\n汽轮机",
+        "image": "/uploads/pages/zh/page2/cards/cardsSection/cards/2/image.png",
+        "imageFocus": "center center",
+        "order": 3,
+        "published": true
+      },
+      {
+        "title": "海洋工程装备",
+        "summary": "钻井平台\n海上防喷器组\n水下采油树",
+        "image": "/uploads/pages/zh/page2/cards/cardsSection/cards/3/image.jpg",
+        "imageFocus": "center center",
+        "order": 4,
+        "published": true
+      }
+    ]
+  },
+  "bottomSection": {
+    "show": false
+  },
+  "bottomListSection": {
+    "show": false,
+    "bottomList": []
+  },
+  "contactSection": {
+    "show": false
+  }
+}

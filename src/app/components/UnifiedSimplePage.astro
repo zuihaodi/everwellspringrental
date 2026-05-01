@@ -88,7 +88,7 @@ const focusPos = (value?: string) => value || "center center";
 
   {cfg.cardsShow !== false && cards.length > 0 && (
     <section class="py-12 bg-gray-50">
-      <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="max-w-7xl mx-auto px-4 grid gap-8 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
         {cards.map((item) => (
           <article class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
             {item.image && (

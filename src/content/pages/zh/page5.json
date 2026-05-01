@@ -1,0 +1,36 @@
+{
+  "heroSection": {
+    "show": true,
+    "heroTitle": "联系我们",
+    "heroSubtitle": "期待与您合作",
+    "heroBgFocus": "center center"
+  },
+  "mainSection": {
+    "show": true,
+    "sectionTitle": "联系方式",
+    "sectionBody": "公司地址:\n123 Marina Bay Financial Centre,\nSingapore 018981\n\n电子邮箱:\ninfo@everwellspringrental.com\n\n联系电话:\n+65 6789 1234",
+    "image": "/uploads/pages/zh/page5/mainSection/image.jpg",
+    "imageFocus": "center center"
+  },
+  "metricsSection": {
+    "show": false,
+    "metrics": []
+  },
+  "middleSection": {
+    "show": false
+  },
+  "cardsSection": {
+    "show": false,
+    "cards": []
+  },
+  "bottomSection": {
+    "show": false
+  },
+  "bottomListSection": {
+    "show": true,
+    "bottomList": []
+  },
+  "contactSection": {
+    "show": false
+  }
+}

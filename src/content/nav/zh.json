@@ -1,0 +1,32 @@
+{
+  "page1": {
+    "title": "关于我们",
+    "href": "/zh/about",
+    "order": 1,
+    "published": true
+  },
+  "page2": {
+    "title": "业务板块",
+    "href": "/zh/business",
+    "order": 2,
+    "published": true
+  },
+  "page3": {
+    "title": "融资解决方案",
+    "href": "/zh/finance",
+    "order": 3,
+    "published": true
+  },
+  "page4": {
+    "title": "公司业绩",
+    "href": "/zh/project",
+    "order": 4,
+    "published": true
+  },
+  "page5": {
+    "title": "联系方式",
+    "href": "/zh/contact",
+    "order": 5,
+    "published": true
+  }
+}

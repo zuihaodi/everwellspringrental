@@ -1,0 +1,55 @@
+{
+  "heroSection": {
+    "show": true,
+    "heroTitle": "融资解决方案",
+    "heroSubtitle": "根据项目需求选择租赁、租购或联合承揽，形成“设备 + 资金 + 服务”的组合式解决方案",
+    "heroBgFocus": "center center"
+  },
+  "mainSection": {
+    "show": true,
+    "sectionTitle": "合作优势",
+    "sectionBody": "降低综合成本，降低企业人力、资金、设备等综合成本\n降低项目运营风险，降低设备、人员等整体项目运营风险\n转移公司负债，项目负债转移出公司，可选择由我司承担\n减轻项目压力，可提供后续运营、人员、配件、维修等服务\n优化公司财务管理，缓解公司现金流压力，优化财务结构，便于信息管理",
+    "image": "/uploads/pages/zh/page3/mainSection/image.jpg",
+    "imageFocus": "center center"
+  },
+  "metricsSection": {
+    "show": false,
+    "metrics": []
+  },
+  "middleSection": {
+    "show": true,
+    "middleTitle": "定制解决方案",
+    "middleSubtitle": "方式自由 设备自由 条件自由"
+  },
+  "cardsSection": {
+    "show": true,
+    "cards": [
+      {
+        "title": "设备租赁（点击放大）",
+        "summary": "设备经营性租赁，合作期限灵活协商\n1.租期灵活；2.改善现金流；3.消除大额固定资产投资风险；4.提升项目效率\n",
+        "image": "/uploads/pages/zh/page3/cards/cardsSection/cards/0/image.png",
+        "imageFocus": "center center",
+        "order": 1,
+        "published": true
+      },
+      {
+        "title": "以租代购（点击放大）",
+        "summary": "客户按期支付租金，满额结清后转移设备所有权。",
+        "image": "/uploads/pages/zh/page3/cards/cardsSection/cards/1/image.png",
+        "imageFocus": "center center",
+        "order": 2,
+        "published": true
+      }
+    ]
+  },
+  "bottomSection": {
+    "show": false
+  },
+  "bottomListSection": {
+    "show": false,
+    "bottomList": []
+  },
+  "contactSection": {
+    "show": false
+  }
+}
