@@ -58,6 +58,14 @@
           "imageFocus": "center center",
           "order": 5,
           "published": true
+        },
+        {
+          "title": "中石油长城钻探墨西哥项目",
+          "summary": "3部3000 马力自动化钻机租赁。\n",
+          "image": "/uploads/pages/zh/page4/cards/sectionGroups/0/cards/5/image.png",
+          "imageFocus": "center center",
+          "order": 6,
+          "published": true
         }
       ]
     },
