@@ -16,29 +16,76 @@
   "sectionGroups": [
     {
       "show": true,
-      "title": "国内业绩",
+      "title": "钻井租赁业绩",
       "subtitle": " #blank# ",
       "cards": [
         {
-          "title": "中石油塔里木油田",
-          "summary": "5 部 3000 马力钻机租赁。\n",
+          "title": "中石油塔里木油田钻机租赁-1",
+          "summary": "3000 马力钻机租赁\n",
           "image": "/uploads/pages/zh/page4/cards/sectionGroups/0/cards/0/image.png",
           "imageFocus": "center center",
           "order": 1,
           "published": true
         },
         {
-          "title": "中国民营油服企业",
-          "summary": "2000 马力、3000 马力钻机租赁业务动员。\n",
+          "title": "中石油塔里木油田钻机租赁-2",
+          "summary": "3000 马力钻机租赁",
           "image": "/uploads/pages/zh/page4/cards/sectionGroups/0/cards/1/image.png",
           "imageFocus": "center center",
           "order": 1,
           "published": true
         },
         {
+          "title": "中石油塔里木油田钻机租赁-3",
+          "summary": "3000 马力钻机租赁\n",
+          "image": "/uploads/pages/zh/page4/cards/sectionGroups/0/cards/2/image.jpg",
+          "imageFocus": "center center",
+          "order": 3,
+          "published": true
+        },
+        {
+          "title": "中石油塔里木油田钻机租赁-4",
+          "summary": "3000 马力钻机租赁",
+          "image": "/uploads/pages/zh/page4/cards/sectionGroups/0/cards/3/image.jpg",
+          "imageFocus": "center center",
+          "order": 4,
+          "published": true
+        },
+        {
+          "title": "中石油塔里木油田钻机租赁-5",
+          "summary": "3000 马力钻机租赁",
+          "image": "/uploads/pages/zh/page4/cards/sectionGroups/0/cards/4/image.jpg",
+          "imageFocus": "center center",
+          "order": 5,
+          "published": true
+        }
+      ]
+    },
+    {
+      "show": true,
+      "title": "压裂设备租赁业绩",
+      "subtitle": " #blank# ",
+      "cards": [
+        {
           "title": "中国长庆地区油田",
-          "summary": "6 套压裂车组及多台辅车租赁业务。\n",
-          "image": "/uploads/pages/zh/page4/cards/sectionGroups/0/cards/2/image.png",
+          "summary": "6套压裂车组及多台辅车租赁业务\n",
+          "image": "/uploads/pages/zh/page4/cards/sectionGroups/1/cards/0/image.png",
+          "imageFocus": "center center",
+          "order": 1,
+          "published": true
+        },
+        {
+          "title": "中石化墨西哥子公司连续油管租赁项目",
+          "summary": "包含连续油管车，80吨吊车及相应各种配套设备，此设备为国内当前主流设备，填补墨西哥市场空白。",
+          "image": "/uploads/pages/zh/page4/cards/sectionGroups/1/cards/1/image.jpg",
+          "imageFocus": "center center",
+          "order": 2,
+          "published": true
+        },
+        {
+          "title": "中东地区压裂车租赁项目",
+          "summary": "\n",
+          "image": "/uploads/pages/zh/page4/cards/sectionGroups/1/cards/2/image.png",
           "imageFocus": "center center",
           "order": 3,
           "published": true
@@ -47,50 +94,9 @@
     },
     {
       "show": true,
-      "title": "油气装备全球租赁服务业绩",
+      "title": "动力项目业绩",
       "subtitle": "#blank#",
-      "cards": [
-        {
-          "title": "中石油长城钻探墨西哥项目",
-          "summary": "3 部 3000 马力自动化钻机租赁",
-          "image": "/uploads/pages/zh/page4/cards/sectionGroups/1/cards/0/image.png",
-          "imageFocus": "center center",
-          "order": 1,
-          "published": true
-        },
-        {
-          "title": "伊拉克地区国际油服项目",
-          "summary": "2000 马力、3000 马力自动化钻机动员",
-          "image": "/uploads/pages/zh/page4/cards/sectionGroups/1/cards/1/image.png",
-          "imageFocus": "center center",
-          "order": 2,
-          "published": true
-        },
-        {
-          "title": "乌兹别克斯坦",
-          "summary": "与国际油服商谈 2000 马力、3000 马力钻机租赁合作",
-          "image": "/uploads/pages/zh/page4/cards/sectionGroups/1/cards/2/image.png",
-          "imageFocus": "center center",
-          "order": 3,
-          "published": true
-        },
-        {
-          "title": "中石化墨西哥项目",
-          "summary": "连续油管车、压裂车租赁及相关维保修总包动员\n",
-          "image": "/uploads/pages/zh/page4/cards/sectionGroups/1/cards/3/image.png",
-          "imageFocus": "center center",
-          "order": 4,
-          "published": true
-        },
-        {
-          "title": "中东地区",
-          "summary": "压裂车租赁业务合作动员",
-          "image": "/uploads/pages/zh/page4/cards/sectionGroups/1/cards/4/image.png",
-          "imageFocus": "center center",
-          "order": 5,
-          "published": true
-        }
-      ]
+      "cards": []
     }
   ],
   "middleSection": {
