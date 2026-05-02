@@ -16,7 +16,7 @@
   "sectionGroups": [
     {
       "show": true,
-      "title": "钻井租赁业绩",
+      "title": "钻井租赁项目",
       "subtitle": " #blank# ",
       "cards": [
         {
@@ -71,7 +71,7 @@
     },
     {
       "show": true,
-      "title": "压裂设备租赁业绩",
+      "title": "压裂设备租赁项目",
       "subtitle": " #blank# ",
       "cards": [
         {
@@ -97,14 +97,39 @@
           "imageFocus": "center center",
           "order": 3,
           "published": true
+        },
+        {
+          "title": "SLB设备租赁及配套服务项目",
+          "summary": "2026年参与SLB设备租赁及配套服务，包含YLT-600压裂拖：对应MPF-331/MPF-341 CT Pumper High-Pressure Pumping System等设备\n",
+          "image": "/uploads/pages/zh/page4/cards/sectionGroups/1/cards/3/image.png",
+          "imageFocus": "center center",
+          "order": 4,
+          "published": true
         }
       ]
     },
     {
       "show": true,
-      "title": "动力项目业绩",
-      "subtitle": "#blank#",
-      "cards": []
+      "title": "钻机动力机组总包服务项目",
+      "subtitle": "由服务方购买柴油机和发电机组设备，安排人员使用设备为井队钻机提供动力，并承担设备的运维工作。",
+      "cards": [
+        {
+          "title": "渤海钻探动力总包项目",
+          "summary": "中石油渤海钻探工程有限公司动力总包项目，项目全程采用设备供应+安装调试+驻场运维+全周期维保的一体化总包模式，无需客户投入设备采购成本、运维人力成本，实现动力保障全流程托管，切实助力客户聚焦核心钻井主业。",
+          "image": "/uploads/pages/zh/page4/cards/sectionGroups/2/cards/0/image.jpg",
+          "imageFocus": "center center",
+          "order": 1,
+          "published": true
+        },
+        {
+          "title": "川庆钻探动力总包项目",
+          "summary": "川庆钻探工程有限公司动力总包项目，项目全程采用设备供应+安装调试+驻场运维+全周期维保的一体化总包模式，无需客户投入设备采购成本、运维人力成本，实现动力保障全流程托管，切实助力客户聚焦核心钻井主业。",
+          "image": "/uploads/pages/zh/page4/cards/sectionGroups/2/cards/1/image.jpg",
+          "imageFocus": "center center",
+          "order": 2,
+          "published": true
+        }
+      ]
     }
   ],
   "middleSection": {
