@@ -2,7 +2,7 @@
   "heroSection": {
     "show": true,
     "heroTitle": "公司业绩",
-    "heroSubtitle": "多年以来，我公司专注油气装备租赁服务，已经与国内、国际多家油服公司和国家石油公司达成了深度合作",
+    "heroSubtitle": " #blank# ",
     "heroBgFocus": "center center"
   },
   "mainSection": {
@@ -20,19 +20,63 @@
       "subtitle": " #blank# ",
       "cards": [
         {
-          "title": "中石油渤海钻探租赁",
-          "summary": "5部3000马力钻机服务于塔里木油田项目",
+          "title": "中石油渤海钻探租赁-1",
+          "summary": "3000马力钻机服务于塔里木油田项目",
           "image": "/uploads/pages/zh/page4/cards/sectionGroups/0/cards/0/image.png",
           "imageFocus": "center center",
           "order": 1,
           "published": true
         },
         {
-          "title": "中石油长城钻探租赁",
-          "summary": "3部3000马力钻机服务于墨西哥PEMEX项目\n",
-          "image": "/uploads/pages/zh/page4/cards/sectionGroups/0/cards/1/image.jpg",
+          "title": "中石油渤海钻探租赁-2",
+          "summary": "3000马力钻机服务于塔里木油田项目",
           "imageFocus": "center center",
           "order": 2,
+          "published": true
+        },
+        {
+          "title": "中石油渤海钻探租赁-3",
+          "summary": "3000马力钻机服务于塔里木油田项目",
+          "imageFocus": "center center",
+          "order": 3,
+          "published": true
+        },
+        {
+          "title": "中石油渤海钻探租赁-4",
+          "summary": "3000马力钻机服务于塔里木油田项目",
+          "imageFocus": "center center",
+          "order": 4,
+          "published": true
+        },
+        {
+          "title": "中石油渤海钻探租赁-5",
+          "summary": "3000马力钻机服务于塔里木油田项目",
+          "imageFocus": "center center",
+          "order": 4,
+          "published": true
+        },
+        {
+          "title": "中石油长城钻探租赁-1",
+          "summary": "3部3000马力钻机服务于墨西哥PEMEX项目901\n",
+          "image": "/uploads/pages/zh/page4/cards/sectionGroups/0/cards/5/image.jpg",
+          "imageFocus": "center top",
+          "order": 6,
+          "published": true
+        },
+        {
+          "title": "中石油长城钻探租赁-2",
+          "summary": "1部3000马力钻机服务于墨西哥PEMEX项目902",
+          "image": "/uploads/pages/zh/page4/cards/sectionGroups/0/cards/6/image.png",
+          "imageFocus": "center center",
+          "order": 7,
+          "published": true
+        },
+        {
+          "title": "中石油长城钻探租赁-3",
+          "summary": "1部3000马力钻机服务于墨西哥PEMEX项目903",
+          "image": "/uploads/pages/zh/page4/cards/sectionGroups/0/cards/7/image.jpg",
+          "imageFocus": "center center",
+          "order": 8,
           "published": true
         }
       ]
