@@ -30,6 +30,7 @@
         {
           "title": "中石油渤海钻探租赁-2",
           "summary": "3000马力钻机服务于塔里木油田项目",
+          "image": "/uploads/pages/zh/page4/cards/sectionGroups/0/cards/1/image.png",
           "imageFocus": "center center",
           "order": 2,
           "published": true
@@ -37,6 +38,7 @@
         {
           "title": "中石油渤海钻探租赁-3",
           "summary": "3000马力钻机服务于塔里木油田项目",
+          "image": "/uploads/pages/zh/page4/cards/sectionGroups/0/cards/2/image.jpg",
           "imageFocus": "center center",
           "order": 3,
           "published": true
@@ -44,6 +46,7 @@
         {
           "title": "中石油渤海钻探租赁-4",
           "summary": "3000马力钻机服务于塔里木油田项目",
+          "image": "/uploads/pages/zh/page4/cards/sectionGroups/0/cards/3/image.png",
           "imageFocus": "center center",
           "order": 4,
           "published": true
@@ -51,6 +54,7 @@
         {
           "title": "中石油渤海钻探租赁-5",
           "summary": "3000马力钻机服务于塔里木油田项目",
+          "image": "/uploads/pages/zh/page4/cards/sectionGroups/0/cards/4/image.jpg",
           "imageFocus": "center center",
           "order": 4,
           "published": true
@@ -112,11 +116,11 @@
         },
         {
           "title": "SLB设备租赁及配套服务项目",
-          "summary": "2026年参与SLB设备租赁及配套服务，包含YLT-600压裂拖：对应MPF-331/MPF-341 CT Pumper High-Pressure Pumping System等设备\n",
+          "summary": "与SLB洽谈设备租赁及配套服务，包含YLT-600压裂拖：对应MPF-331/MPF-341 CT Pumper High-Pressure Pumping System等设备\n",
           "image": "/uploads/pages/zh/page4/cards/sectionGroups/1/cards/3/image.png",
           "imageFocus": "center center",
           "order": 4,
-          "published": true
+          "published": false
         }
       ]
     },
@@ -126,7 +130,7 @@
       "subtitle": "由服务方购买柴油机和发电机组设备，安排人员使用设备为井队钻机提供动力，并承担设备的运维工作。",
       "cards": [
         {
-          "title": "渤海钻探动力总包项目",
+          "title": "渤钻一公司动力机组总包服务",
           "summary": "中石油渤海钻探工程有限公司动力总包项目，项目全程采用设备供应+安装调试+驻场运维+全周期维保的一体化总包模式，无需客户投入设备采购成本、运维人力成本，实现动力保障全流程托管，切实助力客户聚焦核心钻井主业。",
           "image": "/uploads/pages/zh/page4/cards/sectionGroups/2/cards/0/image.jpg",
           "imageFocus": "center center",
@@ -134,11 +138,43 @@
           "published": true
         },
         {
-          "title": "川庆钻探动力总包项目",
-          "summary": "川庆钻探工程有限公司动力总包项目，项目全程采用设备供应+安装调试+驻场运维+全周期维保的一体化总包模式，无需客户投入设备采购成本、运维人力成本，实现动力保障全流程托管，切实助力客户聚焦核心钻井主业。",
+          "title": "渤钻二公司动力机组总包服务",
+          "summary": "中石油渤海钻探工程有限公司动力总包项目，项目全程采用设备供应+安装调试+驻场运维+全周期维保的一体化总包模式，无需客户投入设备采购成本、运维人力成本，实现动力保障全流程托管，切实助力客户聚焦核心钻井主业。",
           "image": "/uploads/pages/zh/page4/cards/sectionGroups/2/cards/1/image.jpg",
           "imageFocus": "center center",
           "order": 2,
+          "published": true
+        },
+        {
+          "title": "渤钻三公司动力机组总包服务",
+          "summary": "中石油渤海钻探工程有限公司动力总包项目，项目全程采用设备供应+安装调试+驻场运维+全周期维保的一体化总包模式，无需客户投入设备采购成本、运维人力成本，实现动力保障全流程托管，切实助力客户聚焦核心钻井主业。",
+          "image": "/uploads/pages/zh/page4/cards/sectionGroups/2/cards/2/image.jpg",
+          "imageFocus": "center center",
+          "order": 3,
+          "published": true
+        },
+        {
+          "title": "渤钻四公司动力机组总包服务",
+          "summary": "中石油渤海钻探工程有限公司动力总包项目，项目全程采用设备供应+安装调试+驻场运维+全周期维保的一体化总包模式，无需客户投入设备采购成本、运维人力成本，实现动力保障全流程托管，切实助力客户聚焦核心钻井主业。",
+          "image": "/uploads/pages/zh/page4/cards/sectionGroups/2/cards/3/image.jpg",
+          "imageFocus": "center center",
+          "order": 4,
+          "published": true
+        },
+        {
+          "title": "川庆川西动力机组总包服务",
+          "summary": "川庆川西动力机组总包服务项目，项目全程采用设备供应+安装调试+驻场运维+全周期维保的一体化总包模式，无需客户投入设备采购成本、运维人力成本，实现动力保障全流程托管，切实助力客户聚焦核心钻井主业。",
+          "image": "/uploads/pages/zh/page4/cards/sectionGroups/2/cards/4/image.jpg",
+          "imageFocus": "center center",
+          "order": 5,
+          "published": true
+        },
+        {
+          "title": "川庆川西动力机组总包服务",
+          "summary": "川庆川西动力机组总包服务项目，项目全程采用设备供应+安装调试+驻场运维+全周期维保的一体化总包模式，无需客户投入设备采购成本、运维人力成本，实现动力保障全流程托管，切实助力客户聚焦核心钻井主业。",
+          "image": "/uploads/pages/zh/page4/cards/sectionGroups/2/cards/5/image.jpg",
+          "imageFocus": "center center",
+          "order": 6,
           "published": true
         }
       ]
