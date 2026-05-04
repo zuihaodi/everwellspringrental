@@ -78,7 +78,8 @@
   },
   "bottomSection": {
     "show": true,
-    "bottomTitle": "Cooperation Advantages"
+    "bottomTitle": "Cooperation Advantages",
+    "bottomSubtitle": "#blank#"
   },
   "bottomListSection": {
     "show": true,
