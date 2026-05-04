@@ -53,7 +53,6 @@ const bottomSubtitle = homeConfig.bottomSection?.bottomSubtitle || homeConfig.bo
 const bottomCols = Math.min(8, Math.max(bottomList.length, 1));
 const toMainImage = (src?: string) => (src ? src.replace(/\.sm\.webp$/i, ".webp") : "");
 const focusPos = (value?: string) => value || "center center";
-const topProductsGrid = planCardGrid(topProducts.length);
 const heroButtons = [
   { text: homeConfig.hero.buttonPrimaryText, href: homeConfig.hero.buttonPrimaryHref },
   { text: homeConfig.hero.buttonSecondaryText, href: homeConfig.hero.buttonSecondaryHref },
@@ -69,6 +68,7 @@ const topProducts = cards.map((c: CmsCardItem) => ({
   ctaText: typeof c.ctaText === "string" ? c.ctaText.trim() : "",
   ctaHref: typeof c.ctaHref === "string" ? c.ctaHref.trim() : "",
 }));
+const topProductsGrid = planCardGrid(topProducts.length);
 ---
 
 <Layout title={`${siteConfig.shortBrand} - Integrated Energy Equipment Provider`} lang="en">
