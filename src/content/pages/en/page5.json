@@ -1,0 +1,40 @@
+{
+  "heroSection": {
+    "show": true,
+    "heroTitle": "Contact Us",
+    "heroSubtitle": "We look forward to cooperating with you",
+    "heroBgFocus": "center center"
+  },
+  "mainSection": {
+    "show": true,
+    "sectionTitle": "Contact Information",
+    "sectionBody": "Company Address:\n10 ANSON ROAD #11-07 INTERNATIONAL PLAZA SINGAPORE 079903\n\nEmail:\ninfo@everwellspringrental.com\n",
+    "imageFocus": "center center"
+  },
+  "metricsSection": {
+    "show": false,
+    "metrics": []
+  },
+  "sectionGroups": [],
+  "middleSection": {
+    "show": false
+  },
+  "cardsSection": {
+    "show": false,
+    "cards": []
+  },
+  "bottomSection": {
+    "show": false
+  },
+  "bottomListSection": {
+    "show": false,
+    "bottomList": []
+  },
+  "contactSection": {
+    "show": false
+  },
+  "translation": {
+    "mode": "auto",
+    "status": "synced"
+  }
+}

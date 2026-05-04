@@ -1,0 +1,185 @@
+{
+  "heroSection": {
+    "show": true,
+    "heroTitle": "Company Performance",
+    "heroSubtitle": "#blank#",
+    "heroBgFocus": "center center"
+  },
+  "mainSection": {
+    "show": false,
+    "imageFocus": "center center"
+  },
+  "metricsSection": {
+    "show": false,
+    "metrics": []
+  },
+  "sectionGroups": [
+    {
+      "show": true,
+      "title": "Drilling Rental Projects",
+      "subtitle": "#blank# ",
+      "cards": [
+        {
+          "title": "CNPC Bohai Drilling Rental-1",
+          "summary": "One 3,000 HP drilling rig serving the Tarim Oilfield project",
+          "imageFocus": "center center",
+          "order": 1,
+          "published": true
+        },
+        {
+          "title": "CNPC Bohai Drilling Rental-2",
+          "summary": "One 3,000 HP drilling rig serving the Tarim Oilfield project",
+          "imageFocus": "center center",
+          "order": 2,
+          "published": true
+        },
+        {
+          "title": "CNPC Bohai Drilling Rental-3",
+          "summary": "One 3,000 HP drilling rig serving the Tarim Oilfield project",
+          "imageFocus": "center center",
+          "order": 3,
+          "published": true
+        },
+        {
+          "title": "CNPC Bohai Drilling Rental-4",
+          "summary": "One 3,000 HP drilling rig serving the Tarim Oilfield project",
+          "imageFocus": "center center",
+          "order": 4,
+          "published": true
+        },
+        {
+          "title": "CNPC Bohai Drilling Rental-5",
+          "summary": "One 3,000 HP drilling rig serving the Tarim Oilfield project",
+          "imageFocus": "center center",
+          "order": 5,
+          "published": true
+        },
+        {
+          "title": "CNPC Great Wall Drilling Rental-1",
+          "summary": "One 3000 HP drilling rig serving Mexico PEMEX Project 901",
+          "imageFocus": "center center",
+          "order": 6,
+          "published": true
+        },
+        {
+          "title": "CNPC Great Wall Drilling Rental-2",
+          "summary": "One 3000 HP drilling rig serving Mexico PEMEX Project 902",
+          "imageFocus": "center center",
+          "order": 7,
+          "published": true
+        },
+        {
+          "title": "CNPC Great Wall Drilling Rental-3",
+          "summary": "One 3000 HP drilling rig serving Mexico PEMEX Project 903",
+          "imageFocus": "center center",
+          "order": 8,
+          "published": true
+        }
+      ]
+    },
+    {
+      "show": true,
+      "title": "Fracturing Equipment Rental Projects",
+      "subtitle": " #blank#",
+      "cards": [
+        {
+          "title": "Oilfield Fracturing Equipment Rental in Changqing Region, China",
+          "summary": "Rental of 6 fracturing truck units and multiple auxiliary vehicles",
+          "imageFocus": "center center",
+          "order": 1,
+          "published": true
+        },
+        {
+          "title": "Sinopec Mexico Subsidiary Coiled Tubing Rental",
+          "summary": "Rental of coiled tubing truck, 80-ton crane, and various corresponding auxiliary equipment",
+          "imageFocus": "center center",
+          "order": 2,
+          "published": true
+        },
+        {
+          "title": "Fracturing Truck Rental in the Middle East",
+          "imageFocus": "center center",
+          "order": 3,
+          "published": true
+        },
+        {
+          "title": "Equipment rental and supporting services for an international oilfield service company",
+          "summary": "Equipment rental and supporting services under negotiation with an international oilfield service company, including YLT-600 fracturing trailer, MPF-331/MPF-341 CT Pumper High-Pressure Pumping System, and other equipment",
+          "imageFocus": "center center",
+          "order": 4,
+          "published": true
+        }
+      ]
+    },
+    {
+      "show": true,
+      "title": "Drilling Rig Power Unit Turnkey Service Project",
+      "subtitle": "The service provider purchases diesel engines and generator sets, deploys personnel to operate the equipment to provide power for rigs, and undertakes equipment operation and maintenance.\n",
+      "cards": [
+        {
+          "title": "Bozhou No.1 Drilling Company Power Unit Turnkey Service",
+          "summary": "CNPC Bohai Drilling Engineering Company power turnkey project. The project adopts an integrated turnkey model including equipment supply + installation & commissioning + on-site operation & maintenance + full-cycle maintenance. Customers are not required to invest in equipment procurement or operational manpower costs, achieving full-process managed power assurance and effectively helping customers focus on their core drilling business.",
+          "imageFocus": "center center",
+          "order": 1,
+          "published": true
+        },
+        {
+          "title": "Bozhou No.2 Drilling Company Power Unit Turnkey Service",
+          "summary": "CNPC Bohai Drilling Engineering Company power turnkey project. The project adopts an integrated turnkey model including equipment supply + installation & commissioning + on-site operation & maintenance + full-cycle maintenance. Customers are not required to invest in equipment procurement or operational manpower costs, achieving full-process managed power assurance and effectively helping customers focus on their core drilling business.",
+          "imageFocus": "center center",
+          "order": 2,
+          "published": true
+        },
+        {
+          "title": "Bozhou No.3 Drilling Company Power Unit Turnkey Service",
+          "summary": "CNPC Bohai Drilling Engineering Company power turnkey project. The project adopts an integrated turnkey model including equipment supply + installation & commissioning + on-site operation & maintenance + full-cycle maintenance. Customers are not required to invest in equipment procurement or operational manpower costs, achieving full-process managed power assurance and effectively helping customers focus on their core drilling business.",
+          "imageFocus": "center center",
+          "order": 3,
+          "published": true
+        },
+        {
+          "title": "Bozhou No.4 Drilling Company Power Unit Turnkey Service",
+          "summary": "CNPC Bohai Drilling Engineering Company power turnkey project. The project adopts an integrated turnkey model including equipment supply + installation & commissioning + on-site operation & maintenance + full-cycle maintenance. Customers are not required to invest in equipment procurement or operational manpower costs, achieving full-process managed power assurance and effectively helping customers focus on their core drilling business.",
+          "imageFocus": "center center",
+          "order": 4,
+          "published": true
+        },
+        {
+          "title": "Chuanqing Power Unit Turnkey Service in Eastern Sichuan",
+          "summary": "Chuanqing Power Unit Turnkey Service Project in Eastern Sichuan. The project adopts an integrated turnkey model including equipment supply + installation & commissioning + on-site operation & maintenance + full-cycle maintenance. Customers are not required to invest in equipment procurement or operational manpower costs, achieving full-process managed power assurance and effectively helping customers focus on their core drilling business.",
+          "imageFocus": "center center",
+          "order": 5,
+          "published": true
+        },
+        {
+          "title": "Chuanqing Power Unit Turnkey Service in Western Sichuan",
+          "summary": "Chuanqing Power Unit Turnkey Service Project in Western Sichuan. The project adopts an integrated turnkey model including equipment supply + installation & commissioning + on-site operation & maintenance + full-cycle maintenance. Customers are not required to invest in equipment procurement or operational manpower costs, achieving full-process managed power assurance and effectively helping customers focus on their core drilling business.",
+          "imageFocus": "center center",
+          "order": 6,
+          "published": true
+        }
+      ]
+    }
+  ],
+  "middleSection": {
+    "show": true
+  },
+  "cardsSection": {
+    "show": true,
+    "cards": []
+  },
+  "bottomSection": {
+    "show": false
+  },
+  "bottomListSection": {
+    "show": false,
+    "bottomList": []
+  },
+  "contactSection": {
+    "show": false
+  },
+  "translation": {
+    "mode": "auto",
+    "status": "synced"
+  }
+}

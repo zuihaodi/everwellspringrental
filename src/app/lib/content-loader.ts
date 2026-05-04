@@ -177,6 +177,7 @@ function normalizeSectionGroups(
   fallbackTitle?: string,
   fallbackSubtitle?: string,
   fallbackCards?: CmsCardItem[],
+  fallbackShow = true,
 ) {
   const normalized = (Array.isArray(groups) ? groups : [])
     .map((group) => ({
@@ -192,11 +193,12 @@ function normalizeSectionGroups(
   const legacyCards = normalizeInlineCards(fallbackCards);
   const legacyTitle = textOrHidden(fallbackTitle);
   const legacySubtitle = textOrHidden(fallbackSubtitle);
+  if (fallbackShow === false) return [];
   if (!hasDisplayText(legacyTitle) && !hasDisplayText(legacySubtitle) && legacyCards.length === 0) return [];
 
   return [
     {
-      show: true,
+      show: fallbackShow,
       title: legacyTitle,
       subtitle: legacySubtitle,
       cards: legacyCards,
@@ -341,14 +343,14 @@ export function loadHomeByLang(lang: "zh" | "en"): CmsHomeConfig | null {
           titleLine1: textOrHidden(cfg.hero?.titleLine1, zhCfg.hero.titleLine1),
           titleLine2: textOrHidden(cfg.hero?.titleLine2, zhCfg.hero.titleLine2),
           subtitle: textOrHidden(cfg.hero?.subtitle, zhCfg.hero.subtitle),
-          buttonPrimaryText: textOrBlank(cfg.hero?.buttonPrimaryText, zhCfg.hero.buttonPrimaryText),
-          buttonPrimaryHref: textOrBlank(cfg.hero?.buttonPrimaryHref, zhCfg.hero.buttonPrimaryHref),
-          buttonSecondaryText: textOrBlank(cfg.hero?.buttonSecondaryText, zhCfg.hero.buttonSecondaryText),
-          buttonSecondaryHref: textOrBlank(cfg.hero?.buttonSecondaryHref, zhCfg.hero.buttonSecondaryHref),
-          buttonTertiaryText: textOrBlank(cfg.hero?.buttonTertiaryText, zhCfg.hero.buttonTertiaryText),
-          buttonTertiaryHref: textOrBlank(cfg.hero?.buttonTertiaryHref, zhCfg.hero.buttonTertiaryHref),
-          buttonQuaternaryText: textOrBlank(cfg.hero?.buttonQuaternaryText, zhCfg.hero.buttonQuaternaryText),
-          buttonQuaternaryHref: textOrBlank(cfg.hero?.buttonQuaternaryHref, zhCfg.hero.buttonQuaternaryHref),
+          buttonPrimaryText: textOrBlank(cfg.hero?.buttonPrimaryText),
+          buttonPrimaryHref: textOrBlank(cfg.hero?.buttonPrimaryHref),
+          buttonSecondaryText: textOrBlank(cfg.hero?.buttonSecondaryText),
+          buttonSecondaryHref: textOrBlank(cfg.hero?.buttonSecondaryHref),
+          buttonTertiaryText: textOrBlank(cfg.hero?.buttonTertiaryText),
+          buttonTertiaryHref: textOrBlank(cfg.hero?.buttonTertiaryHref),
+          buttonQuaternaryText: textOrBlank(cfg.hero?.buttonQuaternaryText),
+          buttonQuaternaryHref: textOrBlank(cfg.hero?.buttonQuaternaryHref),
           bgImage: hasText(cfg.hero?.bgImage) ? cfg.hero.bgImage : zhCfg.hero.bgImage,
           bgImageFocus: hasText(cfg.hero?.bgImageFocus) ? cfg.hero.bgImageFocus : zhCfg.hero.bgImageFocus,
         },
@@ -357,8 +359,8 @@ export function loadHomeByLang(lang: "zh" | "en"): CmsHomeConfig | null {
           ...cfg.cta,
           title: textOrHidden(cfg.cta?.title, zhCfg.cta.title),
           desc: textOrHidden(cfg.cta?.desc, zhCfg.cta.desc),
-          buttonText: textOrBlank(cfg.cta?.buttonText, zhCfg.cta.buttonText),
-          buttonHref: textOrBlank(cfg.cta?.buttonHref, zhCfg.cta.buttonHref),
+          buttonText: textOrBlank(cfg.cta?.buttonText),
+          buttonHref: textOrBlank(cfg.cta?.buttonHref),
         },
         businessSection: {
           ...zhCfg.businessSection,
@@ -586,6 +588,7 @@ export function loadSimplePageByLang(page: SimplePageKey, lang: Lang): CmsSimple
     middleSectionValue?.middleTitle ?? cfg.middleTitle ?? defaults.middleTitle,
     middleSectionValue?.middleSubtitle ?? cfg.middleSubtitle ?? defaults.middleSubtitle,
     localizedLegacyCards,
+    middleShow,
   );
 
   return {

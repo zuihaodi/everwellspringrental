@@ -1,44 +1,29 @@
 {
   "hero": {
-    "titleLine1": "Challenge Deep Earth",
-    "titleLine2": "Set a New Asia Record",
-    "subtitle": "Mastering 12,000m ultra-deep drilling technology and setting the 9,396m Asia record for deepest horizontal well.\nLasting Qual — Your most trusted energy partner.",
-    "buttonPrimaryText": "View Business Areas",
-    "buttonPrimaryHref": "/en/products",
-    "buttonSecondaryText": "Contact Us",
-    "buttonSecondaryHref": "/en/contact"
+    "titleLine1": "Oil & Gas Equipment Rental and Integrated Services",
+    "titleLine2": "#blank#",
+    "subtitle": "Centered on \"Equipment Rental + Financing Cooperation + Maintenance Services\", we provide equipment asset configuration solutions for international oil companies, international oilfield service companies, and large-scale engineering projects.",
+    "buttonPrimaryText": "Core Business",
+    "buttonPrimaryHref": "/en/business",
+    "buttonSecondaryText": "Company Performance",
+    "buttonSecondaryHref": "/en/projects",
+    "buttonTertiaryText": "Contact Us",
+    "buttonTertiaryHref": "/en/contact",
+    "bgImageFocus": "center center"
   },
-  "metrics": [
-    {
-      "value": "2002",
-      "unit": "Year",
-      "desc": "Industry foundation since"
-    },
-    {
-      "value": "9396",
-      "unit": "M",
-      "desc": "Asia drilling depth record"
-    },
-    {
-      "value": "CNPC",
-      "desc": "CNPC tier-1 supplier"
-    },
-    {
-      "value": "ISO",
-      "desc": "Full-system quality certification"
-    }
-  ],
+  "metrics": [],
   "businessSection": {
-    "show": true,
+    "show": false,
     "title": "Core Business Areas",
     "desc": "A comprehensive multinational corporation that integrates the research and development, manufacturing, leasing, trading, and servicing of drilling and production equipment."
   },
   "cardsSection": {
-    "show": true,
+    "show": false,
     "cards": [
       {
         "title": "High-End Drilling Rig Rental (ZJ90DB)",
         "summary": "We offer high-end drilling rig rentals suitable for ultra-deep well operations.",
+        "imageFocus": "center center",
         "ctaText": "Learn More",
         "ctaHref": "/en/products",
         "order": 1,
@@ -47,6 +32,7 @@
       {
         "title": "Specialized Chassis for Oil Fields (China National Heavy Duty Truck Group Joint Research)",
         "summary": "r 8x6 fracturing truck chassis, sand-mixing truck chassis, and 58-ton coiled tubing truck chassis. These products fully replace imported MAN and Mercedes-Benz chassis, thereby reducing overall costs.",
+        "imageFocus": "center center",
         "ctaText": "Learn More",
         "ctaHref": "/en/products",
         "order": 3,
@@ -55,6 +41,7 @@
       {
         "title": "Power System Turnkey Services",
         "summary": "Providing one-stop power system solutions for drilling rigs.",
+        "imageFocus": "center center",
         "ctaText": "Learn More",
         "ctaHref": "/en/products",
         "order": 3,
@@ -62,11 +49,15 @@
       }
     ]
   },
+  "bottomSection": {
+    "show": false
+  },
   "bottomListSection": {
-    "show": true,
+    "show": false,
     "bottomList": []
   },
   "cta": {
+    "show": false,
     "title": "Contact Us",
     "desc": "Oil equipment supply chain solution experts",
     "buttonText": "Get Solution",

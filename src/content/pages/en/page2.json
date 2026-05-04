@@ -1,17 +1,74 @@
 {
   "heroSection": {
     "show": true,
-    "heroTitle": "Our Business",
+    "heroTitle": "Core Business",
+    "heroSubtitle": "Centered on \"Equipment Rental + Financing Cooperation + Maintenance Services\", we provide equipment asset configuration solutions for international oil companies, international oilfield service companies, and large-scale engineering projects.",
     "heroBgFocus": "center center"
   },
   "mainSection": {
     "show": true,
+    "sectionTitle": "Cooperation Models",
+    "sectionBody": "Option 1: Oil Equipment Rental. Operating lease of oil equipment with flexible cooperation term negotiation\nOption 2: Rent-to-Own. Rent-to-own equipment with installment payment\nOption 3: Consortium Approach. Joint project execution, integrated package financing, and subcontracting by agreement",
+    "image": "/uploads/pages/en/page2/mainSection/image.JPG",
     "imageFocus": "center center"
   },
   "metricsSection": {
     "show": false,
     "metrics": []
   },
+  "sectionGroups": [
+    {
+      "show": true,
+      "title": "Cooperation Models Diagram",
+      "subtitle": "Equipment Rental | Rent-to-Own | Consortium Approach",
+      "cards": [
+        {
+          "title": "Equipment Rental",
+          "summary": "Operating lease of oil equipment with flexible cooperation term negotiation\n1. Flexible lease term; 2. Improve cash flow; 3. Eliminate large fixed asset investment risks; 4. Enhance project efficiency",
+          "image": "/uploads/pages/en/page2/cards/sectionGroups/0/cards/0/image.JPG",
+          "imageFocus": "center center",
+          "order": 1,
+          "published": true
+        },
+        {
+          "title": "Rent-to-Own",
+          "summary": "The customer pays rent periodically, and ownership of the equipment is transferred upon full payment.",
+          "image": "/uploads/pages/en/page2/cards/sectionGroups/0/cards/1/image.JPG",
+          "imageFocus": "center center",
+          "order": 2,
+          "published": true
+        }
+      ]
+    },
+    {
+      "show": true,
+      "title": "Cooperation Features",
+      "subtitle": "Customized solutions for models, terms, and conditions based on project requirements",
+      "cards": [
+        {
+          "title": "Flexible Model Selection",
+          "summary": "◼ Three cooperation models can be freely selected based on project needs\n◼ Project solutions tailored to specific requirements\n",
+          "imageFocus": "center center",
+          "order": 1,
+          "published": true
+        },
+        {
+          "title": "Flexible Equipment Selection",
+          "summary": "◼ Customers can select suppliers independently\n◼ We can recommend suppliers \n◼ Equipment maintenance and operation options available",
+          "imageFocus": "center center",
+          "order": 2,
+          "published": true
+        },
+        {
+          "title": "Flexible Terms Selection",
+          "summary": "◼ Equipment ownership options available\n◼ Flexible cooperation period\n◼ Collaborative resource synergy",
+          "imageFocus": "center center",
+          "order": 3,
+          "published": true
+        }
+      ]
+    }
+  ],
   "middleSection": {
     "show": true
   },
@@ -20,11 +77,38 @@
     "cards": []
   },
   "bottomSection": {
-    "show": true
+    "show": true,
+    "bottomTitle": "Cooperation Advantages"
   },
   "bottomListSection": {
     "show": true,
-    "bottomList": []
+    "bottomList": [
+      {
+        "title": "Reduce Comprehensive Costs",
+        "summary": "Reduce overall corporate costs in labor, capital, equipment,etc. ",
+        "order": 1
+      },
+      {
+        "title": "Reduce Project Operational Risks",
+        "summary": "Reduce overall project operational risks of equipment and personnel",
+        "order": 2
+      },
+      {
+        "title": "Transfer Corporate Liabilities",
+        "summary": "Project liabilities may be transferred to our company at the customer's option",
+        "order": 3
+      },
+      {
+        "title": "Reduce Project Burdens",
+        "summary": "Follow-up services available including operation, personnel, parts, and maintenance",
+        "order": 4
+      },
+      {
+        "title": "Optimize Corporate Financial Management",
+        "summary": "Relieve corporate cash flow pressure, optimize financial management, facilitate information disclosure",
+        "order": 5
+      }
+    ]
   },
   "contactSection": {
     "show": false
