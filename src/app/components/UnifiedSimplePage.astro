@@ -1,5 +1,6 @@
 ---
 import { renderRichText } from "../lib/rich-text";
+import { planCardGrid } from "../lib/card-grid";
 import type { CmsSimplePageConfig } from "../types/content";
 
 interface Props {
@@ -11,11 +12,6 @@ const { cfg, lang } = Astro.props as Props;
 const isZh = lang === "zh";
 const toMainImage = (src?: string) => (src ? src.replace(/\.sm\.webp$/i, ".webp") : "");
 const focusPos = (value?: string) => value || "center center";
-const cardColsClass = (count: number) => {
-  if (count === 6 || count === 9) return "xl:grid-cols-3";
-  if (count === 7 || count === 8) return "xl:grid-cols-4";
-  return "xl:grid-cols-3";
-};
 const sectionGroups = (cfg.sectionGroups || []).filter(
   (group) => group.show !== false && ((group.title || group.subtitle) || (group.cards && group.cards.length > 0)),
 );
@@ -97,9 +93,12 @@ const sectionGroups = (cfg.sectionGroups || []).filter(
 
       {group.cards && group.cards.length > 0 && (
         <section class="py-12 bg-gray-50">
-          <div class:list={["max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8", cardColsClass(group.cards.length)]}>
-            {group.cards.map((item) => (
-              <article class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+          {(() => {
+            const gridPlan = planCardGrid(group.cards.length);
+            return (
+              <div class:list={["max-w-7xl mx-auto px-4 grid gap-8", gridPlan.mobileColsClass, gridPlan.tabletColsClass, gridPlan.desktopColsClass]}>
+                {group.cards.map((item, idx) => (
+                  <article class:list={["bg-white p-6 rounded-lg shadow-sm border border-gray-100", gridPlan.itemStartClass[idx]]}>
                 {item.image && (
                   <div class="h-44 mb-4 overflow-hidden rounded">
                     <button
@@ -120,9 +119,11 @@ const sectionGroups = (cfg.sectionGroups || []).filter(
                     {item.ctaText} &rarr;
                   </a>
                 )}
-              </article>
-            ))}
-          </div>
+                  </article>
+                ))}
+              </div>
+            );
+          })()}
         </section>
       )}
     </>
