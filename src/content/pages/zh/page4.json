@@ -120,7 +120,7 @@
           "image": "/uploads/pages/zh/page4/cards/sectionGroups/1/cards/3/image.png",
           "imageFocus": "center center",
           "order": 4,
-          "published": false
+          "published": true
         }
       ]
     },
