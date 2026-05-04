@@ -3,7 +3,7 @@
     "title": "About Us",
     "href": "/en/about",
     "order": 1,
-    "published": true
+    "published": false
   },
   "page2": {
     "title": "Our Business",
